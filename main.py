@@ -1,6 +1,6 @@
 from functions import SistemaDeUsuarios
 
-sistema = SistemaDeUsuarios(caminho_arquivo= "users.txt")
+sistema = SistemaDeUsuarios(arquivo_externo_usuarios = "usuarios.json")
 
 while True:
     opcao = sistema.menu()
