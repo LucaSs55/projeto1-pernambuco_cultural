@@ -1,0 +1,34 @@
+[ 
+
+    {
+        "titulo": "São João de Arcoverde",
+        "data":"14/06/25 a 28/06/25",
+        "descricao":" O São João de Arcoverde 2025 promete mais uma edição inesquecível, reunindo tradição, cultura e grandes artistas para celebrar uma das festas mais aguardadas do Nordeste.",
+        "link": "https://www.empetur.pe.gov.br/evento/1889-arcoverde1"
+    },
+
+    {
+        "titulo": "São João de Caruaru",
+        "data":"01/06/25 a 28/06/25",
+        "descricao":"No São João de Caruaru, todo mundo encontra seu lugar para aproveitar a melhor época do ano, e festejar um dos melhores festivais de São João do Brasil.",
+        "link": "https://www.empetur.pe.gov.br/evento/1868-caruaru"
+
+    },
+
+    {
+        "titulo": "55° Missa do vaqueiro em Serrita",
+        "data":"17/07/25 a 20/07/25",
+        "descricao":"A Missa do Vaqueiro é um tradicional evento religioso católico realizado ao ar livre, em sufrágio da alma de Raimundo Jacó..",
+        "link": "https://www.empetur.pe.gov.br/evento/1926-55-missa-do-vaqueiro-em-serrita"
+
+    },
+
+    {
+        "titulo": "Fenearte- Feira nacional de negócios e artesanato",
+        "data":"09/07/25 a 20/07/25",
+        "descricao":"FENEARTE: A Maior Feira Nacional de Negócios e Artesanato da América Latina",
+        "link":"https://www.empetur.pe.gov.br/evento/1950-olinda-1"
+
+    }
+
+]

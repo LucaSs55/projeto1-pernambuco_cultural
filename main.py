@@ -1,21 +1,30 @@
 from functions import SistemaDeUsuarios
+from functions import SistemaDeEventos
 
-sistema = SistemaDeUsuarios(arquivo_externo_usuarios = "usuarios.json")
+sistema_usuarios = SistemaDeUsuarios(arquivo_externo_usuarios = "usuarios.json")
+sistema_eventos = SistemaDeEventos(arquivo_externo_eventos = "eventos.json")
 
 while True:
-    opcao = sistema.menu()
+    opcao = sistema_usuarios.menu()
 
     if opcao == "1":
-        sistema.cadastrar_usuario()
+        sistema_usuarios.cadastrar_usuario()
 
     elif opcao == "2":
-        sistema.ver_conta()
+        sistema_usuarios.ver_conta()
 
     elif opcao == "3":
-        sistema.deletar_conta()
+        sistema_usuarios.deletar_conta()
 
     elif opcao == "4":
+        sistema_usuarios.atualizar_usuario()
+    
+    elif opcao == '5':
+        sistema_usuarios.login_conta()
         pass
+
+    elif opcao == "6":
+        sistema_eventos.recomendar_eventos()
 
 
 
