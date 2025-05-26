@@ -18,7 +18,7 @@
     {
         "titulo": "55° Missa do vaqueiro em Serrita",
         "data":"17/07/25 a 20/07/25",
-        "descricao":"A Missa do Vaqueiro é um tradicional evento religioso católico realizado ao ar livre, em sufrágio da alma de Raimundo Jacó..",
+        "descricao":"A Missa do Vaqueiro é um tradicional evento religioso católico realizado ao ar livre, em sufrágio da alma de Raimundo Jacó.",
         "link": "https://www.empetur.pe.gov.br/evento/1926-55-missa-do-vaqueiro-em-serrita"
 
     },
@@ -26,9 +26,67 @@
     {
         "titulo": "Fenearte- Feira nacional de negócios e artesanato",
         "data":"09/07/25 a 20/07/25",
-        "descricao":"FENEARTE: A Maior Feira Nacional de Negócios e Artesanato da América Latina",
+        "descricao":"FENEARTE: A Maior Feira Nacional de Negócios e Artesanato da América Latina.",
         "link":"https://www.empetur.pe.gov.br/evento/1950-olinda-1"
 
+    },
+
+
+    {
+        "titulo": "Festa das Águas Termais",
+        "data": "30/08/25",
+        "descricao":"As águas termais de Salgadinho são conhecidas pelo seu potencial medicinal e qualidade hídrica",
+        "link": "https://www.empetur.pe.gov.br/evento/1912-festa-das-aguas-termais"
+    },
+
+
+    {
+        "titulo":"Festa da Juventude",
+        "data":"09/08 a 10/08",
+        "descricao":"Conta com apresentações artísticas, exposições, palestras, gastronomia variada e muita música.",
+        "link":"https://www.empetur.pe.gov.br/evento/1789-festa-da-juventude"
+    },
+
+    {
+        "titulo":"Desafio Caatinga MTB",
+        "data":"16/08/25 a 17/08/25",
+        "descricao":"Concentração de ciclistas vindos de regiões do Nordeste para competirem em diversas modalidades.",
+        "link":"https://www.empetur.pe.gov.br/evento/1756-desafio-caatinga-mtb"
+    },
+
+    {
+        "titulo":"26ª Corrida da Galinha - São Bento do Una",
+        "data":" 26/09/25 a 28/09/25",
+        "descricao":"A Corrida da Galinha é um evento cultural que acontece em São Bento do Una, Pernambuco, e que reúne competições, atividades culturais e exposições.",
+        "link":"https://www.empetur.pe.gov.br/evento/1918-26-corrida-da-galinha-sao-bento-do-una"
+    },
+
+    {
+        "titulo":"Trindade Fight",
+        "data":"05/09/25 a 06/09/25",
+        "descricao":"Evento de muay thai nacional",
+        "link":"https://www.empetur.pe.gov.br/evento/1757-trindade-fight"
+    },
+
+    {
+        "titulo":"3° Festival de Gastronomia de Lagoa do Carro",
+        "data":"01/10/25 a 04/10/25",
+        "descricao":" Uma celebração que reúne gastronomia, cultura e empreendedorismo local, com 50 stands e 20 barracas de exposição, apresentando produtos gastronômicos e artesanato local.",
+        "link":"https://www.empetur.pe.gov.br/evento/1971-lagoa-do-carro"
+    },
+
+    {
+        "titulo":"VINHUVAFEST - 9ª Edição",
+        "data":"09/10/25 a 12/10/25",
+        "descricao":"A feira tem o objetivo de promover o Enoturismo e a vinicultura da região com palestras, seminários e exposições",
+        "link":"https://www.empetur.pe.gov.br/evento/1884-vinhuvafest-9-edicao"
+    },
+
+    {
+        "titulo":"Encontro de Bandas",
+        "data":"12/10/25",
+        "descricao":"Encontro de bandas de fanfarras e competições.",
+        "link":"https://www.empetur.pe.gov.br/evento/1875-encontro-de-bandas"
     }
 
 ]

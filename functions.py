@@ -59,7 +59,7 @@ class SistemaDeUsuarios:
 
 
     def validacao_de_senha(self,senha):
-       if len(senha) <= 8: return False
+       if len(senha) < 8: return False
        if not re.search(r'[A-Z]',senha): return False 
        if not re.search(r'[0-9]', senha): return False
        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', senha): return False
@@ -132,10 +132,12 @@ class SistemaDeUsuarios:
         senha = input("Digite sua senha:").strip()
         for i, usuario in enumerate(self.usuarios): #Escaneia os pares chave-valor dentro da lista usuarios
             if usuario.email == email and usuario.senha == senha: #verifica se o email e a senha batem com o que está salvo no arquivo de usuarios
-                print(f"Dados de Usuário:\033[32m\n-Nome: {usuario.nome} \n-Email:{usuario.email} \n-Senha:{usuario.senha}\033[m")
+                self.limpar_terminal()
+                print(f"Dados de Usuário:\033[32m\n•Nome: {usuario.nome} \n•Email:{usuario.email} \n•Senha:{usuario.senha}\033[m")
+                return  # Sai da função após encontrar o usuário
 
-            else:
-                print(" \033[31m[ERRO] Email ou Senha Incorretos \033[m")
+            # Se o laço terminar sem encontrar, mostra uma única vez:
+        print(" \033[31m[ERRO] Email ou Senha Incorretos \033[m")
 
 
     def deletar_conta(self):
@@ -210,7 +212,8 @@ class SistemaDeUsuarios:
 #Classe para modelar a leitura e a apresentação dos dados de eventos regionais
 class SistemaDeEventos:
     def __init__(self,arquivo_externo_eventos = "eventos.json"):
-        self.arquivo_externo_eventos = arquivo_externo_eventos
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        self.arquivo_externo_eventos = os.path.join(base_path,arquivo_externo_eventos)
         self.eventos = self.carregar_eventos()
         
     def carregar_eventos(self):
