@@ -1,6 +1,8 @@
 from functions import SistemaDeUsuarios
 from functions import SistemaDeEventos
 
+#Arquivo que chama as funções
+
 sistema_usuarios = SistemaDeUsuarios(arquivo_externo_usuarios = "usuarios.json")
 sistema_eventos = SistemaDeEventos(arquivo_externo_eventos = "eventos.json")
 

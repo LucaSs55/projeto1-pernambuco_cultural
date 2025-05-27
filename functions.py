@@ -7,6 +7,14 @@ import webbrowser
 #Classe que modela os dados de usuário
 class Usuario:
     def __init__(self, nome, email, senha):
+        """
+        Inicializa um novo usuário
+
+        Parâmetros:
+            nome (str): Nome do usuário
+            email (str): Email do usuário
+            senha (str): Senha do usuário
+        """
         self.nome = nome
         self.email = email
         self.senha = senha
@@ -14,9 +22,25 @@ class Usuario:
     #Monta instâncias apartir de dicionários
     @staticmethod #Método que não possui acesso a atributos ou métodos de instâncias ou classes
     def from_dict(dados):
+
+        """
+        Cria uma instância da classe Usuario a partir de um dicionário
+
+        Parâmetros:
+            dados (dict): Dicionário contendo as chaves 'nome', 'email' e 'senha'
+
+        Retorna:
+            Usuario: Um objeto da classe Usuario
+        """
         return Usuario(dados["nome"], dados["email"], dados["senha"])
 
     def to_dict(self):
+        """
+        Converte o objeto Usuario em um dicionário
+
+        Retorna:
+            dict: Dicionário com os dados do usuário
+        """
         return {
             "nome": self.nome,
             "email": self.email,
@@ -24,17 +48,41 @@ class Usuario:
         }
 
     def __str__(self):
+        """
+        Representação em string do usuário.
+
+        Retorna:
+            str: Nome e email do usuário formatados.
+        """
+
+
         return f"Nome:{self.nome}, Email:{self.email}"
+    
+
 
 #Classe que administra operações de usuários
 class SistemaDeUsuarios:
 
     def __init__(self, arquivo_externo_usuarios="usuarios.json"):
+
+        """
+        Inicializa o sistema de usuários e carrega os dados do arquivo JSON
+
+        Parâmetros:
+            arquivo_externo_usuarios (str): Caminho para o arquivo JSON com os dados dos usuários
+        """
         self.arquivo_externo_usuarios = arquivo_externo_usuarios
         self.usuarios = []
         self.carregar_usuarios()
 
     def menu(self):
+       
+       """
+        Exibe o menu principal com as opções disponíveis para o usuário.
+
+        Retorna:
+            str: Opção escolhida pelo usuário.
+        """
        print("===============> MENU PRINCIPAL <=================")
        print(20*"=-")
        print("-[1] Cadastro de Usuário")
@@ -48,17 +96,45 @@ class SistemaDeUsuarios:
     
     
     def limpar_terminal(self):
-        return os.system("cls" if os.name else "clear")
+
+        """
+        Limpa o terminal com base no sistema operacional.
+
+        Retorna:
+            int: Código de status do comando de limpeza do terminal.
+        """
+        return os.system("cls" if os.name == "nt" else "clear")
 
     #Validações Dos dados de usuário
     
     def validacao_de_email(self, email):
+
+        """
+        Verifica se o email termina com um dos domínios válidos.
+
+        Parâmetros:
+            email (str): Email a ser validado.
+
+        Retorna:
+            bool: True se o email for válido, False caso contrário.
+        """
+        
         dominios_validos = ("@gmail.com", "@hotmail.com", "@yahoo.com")
         return email.endswith(dominios_validos) #Verifica se o email termina com os domínios válidos
             
 
 
     def validacao_de_senha(self,senha):
+       
+       """
+        Verifica se a senha atende aos critérios de complexidade.
+
+        Parâmetros:
+            senha (str): Senha a ser validada.
+
+        Retorna:
+            bool: True se a senha for considerada forte, False caso contrário.
+        """
        if len(senha) < 8: return False
        if not re.search(r'[A-Z]',senha): return False 
        if not re.search(r'[0-9]', senha): return False
@@ -68,6 +144,10 @@ class SistemaDeUsuarios:
 
     # Envio e modelagem dos dados para o arquivo externo json
     def carregar_usuarios(self):
+
+        """
+        Carrega os usuários do arquivo JSON e os armazena em uma lista.
+        """
         if os.path.exists(self.arquivo_externo_usuarios):
             with open(self.arquivo_externo_usuarios,"r") as d:
                 try:
@@ -81,11 +161,22 @@ class SistemaDeUsuarios:
 
     #Salva dados do usuário no arquivo externo json
     def salvar_dados_usuarios(self):
+
+        """
+        Salva os dados dos usuários no arquivo JSON.
+        """
         with open(self.arquivo_externo_usuarios,"w") as d: #Abre o arquivo json no modo de escrita
             json.dump([item.to_dict() for item in self.usuarios],d,indent=4)
 
 
     def cadastrar_usuario(self):
+
+        """
+        Realiza o cadastro de um novo usuário.
+
+        Solicita nome, email e senha, realiza validações, e armazena o novo usuário se todas
+        as informações forem válidas.
+        """
         print("============> Cadastro de Usuário <============")
         # Loop para nome
         while True:
@@ -127,6 +218,11 @@ class SistemaDeUsuarios:
 
 
     def ver_conta(self):
+        ''' 
+        Possibilita a leitura dos dados de usuário
+
+        Solicita Email, Senha e realiza validações se estiverem corretos imprime os dados de usuário na tela 
+        '''
         print("============> Ver Informações de Usuário <============")
         email = input("Digite seu email:").strip()
         senha = input("Digite sua senha:").strip()
@@ -139,8 +235,15 @@ class SistemaDeUsuarios:
             # Se o laço terminar sem encontrar, mostra uma única vez:
         print(" \033[31m[ERRO] Email ou Senha Incorretos \033[m")
 
+       
+
 
     def deletar_conta(self):
+        ''' 
+        Deleta usuários já cadastrados
+
+        Solicita Email e Senha, se ambos forem validados, então há um input de confirmação da deleção de conta por parte do usuario
+        '''
         print("============> Deletar Conta <============")
     
         email = input("Digite seu email: ").strip()
@@ -161,6 +264,12 @@ class SistemaDeUsuarios:
 
 
     def atualizar_usuario(self):
+        '''
+        Permite a edição dos dados de usuário
+
+        Solicita Email e Senha, e se ambos forem validados, então é aberto um menu de escolha das informações a serem alteradas [1]Nome,[2]Email,[3]Senha,[4] Todos os dados
+        
+        '''
         print("============> Atualizar Conta <============")
 
         email = input("Digite seu email atual: ").strip()
@@ -212,11 +321,23 @@ class SistemaDeUsuarios:
 #Classe para modelar a leitura e a apresentação dos dados de eventos regionais
 class SistemaDeEventos:
     def __init__(self,arquivo_externo_eventos = "eventos.json"):
+        """
+        Inicializa o sistema de eventos e carrega os dados do arquivo JSON.
+
+        Parâmetros:
+            arquivo_externo_eventos (str): Caminho para o arquivo JSON com os dados dos eventos.
+        """
         base_path = os.path.dirname(os.path.abspath(__file__))
         self.arquivo_externo_eventos = os.path.join(base_path,arquivo_externo_eventos)
         self.eventos = self.carregar_eventos()
         
     def carregar_eventos(self):
+        """
+        Carrega os eventos do arquivo JSON
+
+        Retorna:
+            list: Lista de eventos
+        """
         try:
             with open(self.arquivo_externo_eventos,"r",encoding= "utf-8") as f: #Abre o arquivo de eventos no modo de leitura para trazer as strings salvas dentro do arquivo
                 return json.load(f)
@@ -230,6 +351,11 @@ class SistemaDeEventos:
             return []
 
     def mostrar_eventos(self):
+
+        '''Permite a Exibição dos eventos recomendados no terminal com o link de direcionamento para mais informações do evento  
+        
+        Há um laço de repetição que pega o par chave-valor e permite a exibição do evento com o respectivo índice na tela
+        '''
         print(" \033[33m <============ Eventos Recomendados ============> \033[m")
         print("")
         print(f"\033[33m{30*"+="} \033[m")
@@ -241,6 +367,12 @@ class SistemaDeEventos:
         print(f"\033[33m {30*"+="} \033[m")
 
     def abrir_link_evento(self,i):
+        ''' 
+        Permite o direcionamento do usuário para uma página no navegador com o respectivo evento
+
+        Por meio da biblioteca webbrowser ocorre o direcionamento para uma página do navegador do respectivo evento por meio da abertura de seu link
+        
+        '''
         try:
             evento = self.eventos[i-1]
             print(f"Abrindo link do evento: {evento["titulo"]}")
@@ -249,6 +381,13 @@ class SistemaDeEventos:
             print("[ERRO]Endereço do evento não encontrado")
 
     def recomendar_eventos(self):
+
+        '''
+        Permite a recomendação dos eventos para o usuário por meio de uma chamada única de função
+
+        Cria o loop que mantém os eventos na tela e possibilita a saída do usuário ao digitar 0
+        
+        '''
         while True:
             self.mostrar_eventos()
             opcao = input("Digite o número de um dos eventos (Digite 0 para sair):")
