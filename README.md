@@ -21,7 +21,7 @@ Pernambuco cultural é um projeto que visa propiciar aos seus usuários maior ex
 - **Biblioteca:**
   - `os`Permite a interação do terminal com a interface do sistema operacional`
   - `re` Serve para fazer manipulação das expressões regulares durante a validação de senha.
-  -`Json` Serve para modelar e manipular os dados de usuário no formato json.
+  - `Json` Serve para modelar e manipular os dados de usuário no formato json.
   - `Webbrowser` Permite abrir o link dos eventos pelo terminal python.
 ## Como executar o projeto:
 - **É preciso que o python 3 esteja baixado no sistema.**
