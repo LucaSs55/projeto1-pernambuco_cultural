@@ -1,9 +1,9 @@
 # Pernambuco Cultural    
 
-## Descrição do Projeto:
+## 📌Descrição do Projeto:
 Pernambuco cultural é um projeto que visa propiciar aos seus usuários maior exposição e contato com eventos regionais de Pernambuco por meio de um divulgador de eventos e também incentivar o acesso a obras literárias de caráter regional e universal por meio de um sistema baseado na gamificação, por meio de jogos e testes de conhecimento acerca de obras literárias, assim dinamizando o processo de aprendizado, através da leitura e propiciando uma maior exposição da riqueza cultural Pernambucana para o mundo.
 
-## Recursos e funcionalidades:
+## 🛠️Recursos e funcionalidades:
 
 - **Cadastro de Nome, Email e Senha:** Permite a criação e o salvamento dos dados de usuário após algumas validações de dados em formato de dicionário dentro de uma lista no arquivo usuarios.json.
 - **Atualizar dados de usuário:** Após uma validação de Email e Senha, mostra um menu com as opções para atualização dos dados de usuário.
@@ -16,16 +16,20 @@ Pernambuco cultural é um projeto que visa propiciar aos seus usuários maior ex
 - **Validação de dados salvos na lista de usuários:** Faz a verificação dos dados de usuário salvos no arquivo de usuários para a efetivação de certas operações no código.
 - **Divulgador de Eventos Culturais:** Permite a visualização dos eventos culturais disponíveis no Estado com informação de Nome, Data, Descrição e um link externo com direcionamento para o site oficial do Evento.
   
-## Tecnologias Utilizadas no código:
+## 💻Tecnologias Utilizadas no código:
 - Python 3
-- **Biblioteca:**
+- **Bibliotecas:**
   - `os`Permite a interação do terminal com a interface do sistema operacional`
   - `re` Serve para fazer manipulação das expressões regulares durante a validação de senha.
   - `Json` Serve para modelar e manipular os dados de usuário no formato json.
   - `Webbrowser` Permite abrir o link dos eventos pelo terminal python.
 ## Como executar o projeto:
-- **É preciso que o python 3 esteja baixado no sistema.**
-  
-## Estrutura do Projeto:
+- **É preciso que o python 3 esteja instalado no sistema.**
+## 📁Estrutura do Projeto:
 - usuarios.py: Arquivo de armazenamento de usuários.
 - eventos.py: Arquivo de armazenamento de eventos, adicionados manualmente.
+## 📚Fluxogramas do Projeto:
+- https://drive.google.com/drive/folders/19kttBrvtWz4mDgYm-UhQ76ITOs4oD630?usp=drive_link
+## 🙋‍♂️Colaboradores:
+- Lucas Santos | https://github.com/LucaSs55
+- Davi Eufrásio | https://github.com/Davi2904efr
