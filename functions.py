@@ -106,6 +106,29 @@ class SistemaDeUsuarios:
         return os.system("cls" if os.name == "nt" else "clear")
 
     #Validações Dos dados de usuário
+
+    def validacao_de_nome(self,nome):
+        '''  
+        Verifica se o nome está vazio, contém caracteres especiais, ou se já está salvo em outro usuário
+        
+        Parâmetros:
+            nome (str): Nome a ser validado.
+
+        Retorna:
+            bool: True se o nome for validado, e False caso não seja.
+        '''
+        if not nome:
+            print("\033[31m[ERRO], o nome não pode estar vazio\033[m")
+            return False
+        
+        for usuario in self.usuarios:
+            if usuario.nome == nome:
+                print("\033[31m[ERRO], nome já existente, tente novamente\033[m")
+                return False
+        
+        if re.search(r'[!@#$%^&*(),.?":{}|<>]', nome): 
+            print("\033[31m[ERRO], o nome não pode conter caracteres especiais\033[m")
+            return False
     
     def validacao_de_email(self, email):
 
@@ -118,11 +141,21 @@ class SistemaDeUsuarios:
         Retorna:
             bool: True se o email for válido, False caso contrário.
         """
+        if not email:
+            print("\033[31m[ERRO],o email não pode estar vazio\033[m")
+            return False
         
-        dominios_validos = ("@gmail.com", "@hotmail.com", "@yahoo.com")
-        return email.endswith(dominios_validos) #Verifica se o email termina com os domínios válidos
+        for usuario in self.usuarios:
+            if usuario.email == email:
+                print("\033[31m[ERRO], Email já existente,tente novamente\033[m")
+                return False
             
-
+        dominios_validos = ("@gmail.com", "@hotmail.com", "@yahoo.com")
+        if not email.endswith(dominios_validos):
+            print("\033[31m[ERRO], utilize um domínio válido(@gmail.com,@hotmail.com,@yahoo.com)\033[m")
+            return False
+             #Verifica se o email termina com os domínios válidos
+        
 
     def validacao_de_senha(self,senha):
        
@@ -181,10 +214,10 @@ class SistemaDeUsuarios:
         # Loop para nome
         while True:
             nome = input("Digite seu nome: ").strip()
-            if nome:
+            if self.validacao_de_nome(nome):
                 break
             else:
-                print("\033[31m[ERRO] Nome não pode estar vazio.\033[m")
+                continue
 
         # Loop para email até ser digitado um email com domínio válido
         while True:
@@ -192,7 +225,7 @@ class SistemaDeUsuarios:
             if self.validacao_de_email(email):
                 break
             else:
-                print("\033[31m[ERRO] Email inválido. Tente novamente com um domínio válido.\033[m")
+                continue
 
         # Loop para senha e confirmação de senha até ambas serem validadas
         while True:
@@ -201,6 +234,10 @@ class SistemaDeUsuarios:
 
             if senha != confirmacao:
                 print("\033[31m[ERRO] As senhas não coincidem.\033[m")
+                continue #serve para interromper a iteração das condicionais de forma que se uma das condições de erro for atendida, as outras não são executadas e há a volta para o início do loop.
+
+            if senha == "":
+                print("\033[31m[ERRO], o preenchimento da senha e obrigatório\033[m")
                 continue
 
             if not self.validacao_de_senha(senha):
