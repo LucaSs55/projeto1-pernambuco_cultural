@@ -1,5 +1,5 @@
-from functions import SistemaDeUsuarios
-from functions import SistemaDeEventos
+from user import SistemaDeUsuarios
+from events_promoter import SistemaDeEventos
 
 #Arquivo que chama as funções
 
@@ -23,7 +23,7 @@ while True:
     
     elif opcao == '5':
         sistema_usuarios.login_conta()
-        pass
+        
 
     elif opcao == "6":
         sistema_eventos.recomendar_eventos()
