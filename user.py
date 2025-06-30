@@ -15,9 +15,10 @@ class Usuario:
         self.nome = nome
         self.email = email
         self.senha = senha
+        
 
 
-    def to_dict(self):
+    def modelar_usuario(self):
         """
         Converte o objeto Usuario em um dicionário
 
@@ -118,7 +119,7 @@ class SistemaDeUsuarios:
         Salva os dados dos usuários no arquivo JSON.
         """
         with open(self.arquivo_externo_usuarios,"w") as d: #Abre o arquivo json no modo de escrita
-            json.dump([item.to_dict() for item in self.usuarios],d,indent=4)
+            json.dump([item.modelar_usuario() for item in self.usuarios],d,indent=4)
 
 
     def cadastrar_usuario(self):

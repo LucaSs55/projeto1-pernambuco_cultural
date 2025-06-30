@@ -23,10 +23,9 @@ while True:
     
     elif opcao == '5':
         sistema_usuarios.login_conta()
-        
 
     elif opcao == "6":
-        sistema_eventos.recomendar_eventos()
+        sistema_eventos.executar_interface_de_eventos()
 
 
 
