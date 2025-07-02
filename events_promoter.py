@@ -176,9 +176,30 @@ class SistemaDeEventos:
 
         self.frame_resultado.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
         self.canvas.bind("<Configure>", lambda e: self.centralizar_eventos())
+                # Garante que o canvas capture o scroll mesmo fora da barra
+        self.canvas.bind("<Enter>", lambda e: self.canvas.focus_set())
+                # Suporte à rolagem com o mouse em toda a interface
+        def on_mousewheel(self, event):
+            if os.name == 'nt':
+                self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+            else:
+                self.canvas.yview_scroll(int(-1 * event.delta), "units")
 
-        #chamada das principais funções para ativar a interface gráfica
+        def on_scroll_linux_up(self, event):
+            self.canvas.yview_scroll(-1, "units")
 
-        self.criar_filtros()
-        self.criar_interface()
-        self.janela.mainloop()
+        def on_scroll_linux_down(self, event):
+            self.canvas.yview_scroll(1, "units")
+            
+            # Faz o canvas capturar foco ao entrar com o mouse
+            self.canvas.bind("<Enter>", lambda e: self.canvas.focus_set())
+
+            
+            self.janela.bind_all("<MouseWheel>", on_mousewheel)  # Windows/macOS
+            self.janela.bind_all("<Button-4>", on_scroll_linux_up)   # Linux scroll up
+            self.janela.bind_all("<Button-5>", on_scroll_linux_down) # Linux scroll down
+            
+            
+            self.criar_filtros()
+            self.criar_interface()
+            self.janela.mainloop()
