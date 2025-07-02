@@ -1,17 +1,23 @@
 [
     {
-        "nome": "light",
-        "email": "yagami@gmail.com",
-        "senha": "Deathgod@123"
+        "nome": "joão",
+        "email": "joão@gmail.com",
+        "senha": "Origami123#",
+        "divisao": "Ferro",
+        "pontos": 0
     },
     {
-        "nome": "luck",
-        "email": "luck@gmail.com",
-        "senha": "Origami123#"
+        "nome": "rafael",
+        "email": "rafael@gmail.com",
+        "senha": "Greenl5#",
+        "divisao": "Ferro",
+        "pontos": 0
     },
     {
-        "nome": "kai",
-        "email": "kai@gmail.com",
-        "senha": "Lanister5#"
+        "nome": "roberto",
+        "email": "roberto@hotmail.com",
+        "senha": "Robert5#",
+        "divisao": "Ferro",
+        "pontos": 0
     }
 ]

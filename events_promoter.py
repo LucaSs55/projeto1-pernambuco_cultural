@@ -28,11 +28,11 @@ class SistemaDeEventos:
                 return json.load(f)
             
         except FileNotFoundError:
-            tkinter.messagebox.showerror("Errquivo não encontrado.")
+            tkinter.messagebox.showerror("[Erro] arquivo não encontrado.")
             return []
         
         except json.JSONDecodeError:
-            tkinter.messagebox.showerror("Errquivo JSON inválido ou não encontrado.")
+            tkinter.messagebox.showerror("[Erro] arquivo JSON inválido ou não encontrado.")
             return []
     #Cria os filtros por data,cidade e palavra chave para buscar eventos regionais específicos
     def criar_filtros(self):
@@ -49,7 +49,7 @@ class SistemaDeEventos:
         self.entry_busca.grid(row=0, column=5, padx=5)
 
         tkinter.Button(self.frame_filtros, text="Filtrar", command=self.aplicar_filtros, bg="green", fg="white").grid(row=0, column=6, padx=10)
-        tkinter.Button(self.frame_filtros, text="Limpar", command=self.limpar_filtros, bg="gray", fg="white").grid(row=0, column=7, padx=5)
+        tkinter.Button(self.frame_filtros, text="Limpar", command=self.limpar_filtros_busca, bg="gray", fg="white").grid(row=0, column=7, padx=5)
     #Traz o determinado evento a partir do que é digitado no input de filtro e previne possíveis erros de usuário
     def aplicar_filtros(self):
         self.filtros["data"] = self.entry_data.get().strip().lower()
@@ -57,7 +57,7 @@ class SistemaDeEventos:
         self.filtros["busca"] = self.entry_busca.get().strip().lower()
         self.criar_interface()
     #Faz a limpeza depois que algo é digitado no filtro
-    def limpar_filtros(self):
+    def limpar_filtros_busca(self):
         self.entry_data.delete(0, tkinter.END)
         self.entry_cidade.delete(0, tkinter.END)
         self.entry_busca.delete(0, tkinter.END)
@@ -82,7 +82,7 @@ class SistemaDeEventos:
         for evento in self.eventos:
             data_ok = self.filtros["data"] in evento["data"].lower()
             cidade_ok = self.filtros["cidade"] in evento.get("cidade", "").lower()
-            busca_ok = self.filtros["busca"] in evento["titulo"].lower() or self.filtros["busca"] in evento["descricao"].lower()
+            busca_ok = self.filtros["busca"] in evento["titulo"].lower() or self.filtros["busca"] in evento["descricao"].lower() #Busca palavra chave ou letra presente na descrição ou título do evento
 
             if all([
                 self.filtros["data"] == "" or data_ok,

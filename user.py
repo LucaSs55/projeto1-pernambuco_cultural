@@ -3,7 +3,7 @@ import json
 from validations import *
 #Classe que modela os dados de usuário
 class Usuario:
-    def __init__(self, nome, email, senha):
+    def __init__(self, nome, email, senha, divisao ="Ferro", pontos = 0):
         """
         Inicializa um novo usuário
 
@@ -15,8 +15,8 @@ class Usuario:
         self.nome = nome
         self.email = email
         self.senha = senha
-        
-
+        self.divisao = divisao
+        self.pontos = pontos
 
     def modelar_usuario(self):
         """
@@ -28,7 +28,9 @@ class Usuario:
         return {
             "nome": self.nome,
             "email": self.email,
-            "senha": self.senha
+            "senha": self.senha,
+            "divisao":self.divisao,
+            "pontos":self.pontos
         }
 
     def __str__(self):
@@ -40,7 +42,7 @@ class Usuario:
         """
 
 
-        return f"Nome:{self.nome}, Email:{self.email}"
+        return f"Nome:{self.nome} | Email:{self.email} | Divisão:{self.divisao} | Pontos:{self.pontos}"
     
 
 
@@ -57,7 +59,7 @@ class SistemaDeUsuarios:
         """
         self.arquivo_externo_usuarios = arquivo_externo_usuarios
         self.usuarios = []
-        self.carregar_usuarios()
+        self.carregar_dados_usuarios()
 
     def menu(self):
        
@@ -90,13 +92,13 @@ class SistemaDeUsuarios:
         return os.system("cls" if os.name == "nt" else "clear")
 
     # Envio e modelagem dos dados para o arquivo externo json
-    def carregar_usuarios(self):
+    def carregar_dados_usuarios(self):
 
         """
         Carrega os usuários do arquivo JSON e os armazena em uma lista.
         """
         if os.path.exists(self.arquivo_externo_usuarios):
-            with open(self.arquivo_externo_usuarios,"r") as d:
+            with open(self.arquivo_externo_usuarios,"r",encoding="utf-8") as d:
                 try:
                     dados = json.load(d)
                     self.usuarios = []
@@ -104,7 +106,9 @@ class SistemaDeUsuarios:
                         nome = item.get("nome")
                         email = item.get("email")
                         senha = item.get("senha")
-                        usuario = Usuario(nome, email, senha)
+                        divisao = item.get("divisao")
+                        pontos = item.get("pontos")
+                        usuario = Usuario(nome, email, senha, divisao=divisao if divisao is not None else "ferro",pontos = pontos if pontos is not None else 0)
                         self.usuarios.append(usuario)
                 except json.JSONDecodeError:
                     print("Arquivo JSON inválido")
@@ -118,8 +122,35 @@ class SistemaDeUsuarios:
         """
         Salva os dados dos usuários no arquivo JSON.
         """
-        with open(self.arquivo_externo_usuarios,"w") as d: #Abre o arquivo json no modo de escrita
-            json.dump([item.modelar_usuario() for item in self.usuarios],d,indent=4)
+        with open(self.arquivo_externo_usuarios,"w",encoding="utf-8") as d: #Abre o arquivo json no modo de escrita
+            json.dump([item.modelar_usuario() for item in self.usuarios],d,indent=4,ensure_ascii=False)
+
+    #
+    def acumular_pontos(self,numero_de_pontos):
+        self.pontos += numero_de_pontos
+        self.alterar_divisao()
+
+    def alterar_divisao(self):
+        if self.pontos >= 2000:
+            self.divisao = "Diamante"
+
+        elif self.pontos >= 1000:
+            self.divisao = "Rubi"
+
+        elif self.pontos >= 500:
+            self.divisao = "Esmeralda"
+
+        elif self.pontos >= 300:
+            self.divisao = "Ouro"
+
+        elif self.pontos >= 250:
+            self.divisao = "Prata"
+
+        elif self.pontos >= 125:
+            self.divisao = "Bronze"
+            
+        else:
+            self.divisao = "Ferro"
 
 
     def cadastrar_usuario(self):
@@ -133,8 +164,8 @@ class SistemaDeUsuarios:
         print("============> Cadastro de Usuário <============")
         # Loop para nome
         while True:
-            nome = input("Digite seu nome: ").strip()
-            if validacao_de_nome(nome,self.usuarios):
+            nome = input("Digite seu nome: ").strip().lower()
+            if validacao_de_nome(nome, self.usuarios):
                 break
 
         # Loop para email até ser digitado um email com domínio válido
@@ -232,7 +263,7 @@ class SistemaDeUsuarios:
                 opcao = input("Escolha uma opção: ").strip()
 
                 if opcao == "1" or opcao == "4":
-                    novo_nome = input("Novo nome: ").strip()
+                    novo_nome = input("Novo nome: ").strip().lower()
                     if novo_nome:
                         usuario.nome = novo_nome
                     else:
@@ -274,6 +305,24 @@ class SistemaDeUsuarios:
         for usuario in self.usuarios:
             if usuario.email == email and usuario.senha == senha:
                 self.limpar_terminal()
-                print(f"Seja Bem vindo {usuario.nome}!")
+                print(f"Seja Bem vindo, {usuario.nome}!")
+
+                while True:
+                    print("\n--- Menu de jogos culturais ---")
+                    print("1. jogo-teste")
+                    print("2. sair do menu de jogos")
+                    print("3. Sair da conta")
+                    esc = input("Escolha uma opção: ")
+
+                    if esc == "1":
+                        print("Jogo simulado... +10 pontos")
+                        if not hasattr(usuario, 'pontos'):
+                            usuario.pontos = 0
+                        usuario.pontos += 10
+                        self.salvar_dados_usuarios()
+                    elif(esc == "2"):
+                        print("Saindo da conta")
+                        break
                 return
-        print("[ERRO]")
+                
+            print("[ERRO]")
