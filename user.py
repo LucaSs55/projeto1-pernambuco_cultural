@@ -1,6 +1,7 @@
 import os
 import json
 from validations import *
+
 #Classe que modela os dados de usuário
 class Usuario:
     def __init__(self, nome, email, senha, divisao ="Ferro", pontos = 0):
@@ -18,7 +19,7 @@ class Usuario:
         self.divisao = divisao
         self.pontos = pontos
 
-    def modelar_usuario(self):
+    def modelarUsuario(self):
         """
         Converte o objeto Usuario em um dicionário
 
@@ -44,93 +45,15 @@ class Usuario:
 
         return f"Nome:{self.nome} | Email:{self.email} | Divisão:{self.divisao} | Pontos:{self.pontos}"
     
-
-
-#Classe que administra operações de usuários
-class SistemaDeUsuarios:
-
-    def __init__(self, arquivo_externo_usuarios="usuarios.json"):
-
-        """
-        Inicializa o sistema de usuários e carrega os dados do arquivo JSON
-
-        Parâmetros:
-            arquivo_externo_usuarios (str): Caminho para o arquivo JSON com os dados dos usuários
-        """
-        self.arquivo_externo_usuarios = arquivo_externo_usuarios
-        self.usuarios = []
-        self.carregar_dados_usuarios()
-
-    def menu(self):
-       
-       """
-        Exibe o menu principal com as opções disponíveis para o usuário.
-
-        Retorna:
-            str: Opção escolhida pelo usuário.
-        """
-       print("===============> MENU PRINCIPAL <=================")
-       print(20*"=-")
-       print("-[1] Cadastro de Usuário")
-       print("-[2] Ver informações de usuário")
-       print("-[3] Deletar conta")
-       print("-[4] Atualizar dados da conta")
-       print("-[5] Login ")
-       print("-[6] Recomendações de Eventos Regionais ")
-       print(20 * "=-")
-       return input("Escolha uma das opções acima:")
-    
-    
-    def limpar_terminal(self):
-
-        """
-        Limpa o terminal com base no sistema operacional.
-
-        Retorna:
-            int: Código de status do comando de limpeza do terminal.
-        """
-        return os.system("cls" if os.name == "nt" else "clear")
-
-    # Envio e modelagem dos dados para o arquivo externo json
-    def carregar_dados_usuarios(self):
-
-        """
-        Carrega os usuários do arquivo JSON e os armazena em uma lista.
-        """
-        if os.path.exists(self.arquivo_externo_usuarios):
-            with open(self.arquivo_externo_usuarios,"r",encoding="utf-8") as d:
-                try:
-                    dados = json.load(d)
-                    self.usuarios = []
-                    for item in dados:
-                        nome = item.get("nome")
-                        email = item.get("email")
-                        senha = item.get("senha")
-                        divisao = item.get("divisao")
-                        pontos = item.get("pontos")
-                        usuario = Usuario(nome, email, senha, divisao=divisao if divisao is not None else "ferro",pontos = pontos if pontos is not None else 0)
-                        self.usuarios.append(usuario)
-                except json.JSONDecodeError:
-                    print("Arquivo JSON inválido")
-                    self.usuarios = []
-        else:
-            self.usuarios = []
-
-    #Salva dados do usuário no arquivo externo json
-    def salvar_dados_usuarios(self):
-
-        """
-        Salva os dados dos usuários no arquivo JSON.
-        """
-        with open(self.arquivo_externo_usuarios,"w",encoding="utf-8") as d: #Abre o arquivo json no modo de escrita
-            json.dump([item.modelar_usuario() for item in self.usuarios],d,indent=4,ensure_ascii=False)
-
-    #
-    def acumular_pontos(self,numero_de_pontos):
+    def acumularPontos(self,numero_de_pontos):
         self.pontos += numero_de_pontos
-        self.alterar_divisao()
+        self.alterarDivisao()
 
-    def alterar_divisao(self):
+    def perderPontos(self,numero_de_pontos):
+        self.pontos -= numero_de_pontos
+        self.alterarDivisao()
+
+    def alterarDivisao(self):
         if self.pontos >= 2000:
             self.divisao = "Diamante"
 
@@ -152,8 +75,99 @@ class SistemaDeUsuarios:
         else:
             self.divisao = "Ferro"
 
+#Classe que administra operações gerais de usuários
+class SistemaUsuarios:
 
-    def cadastrar_usuario(self):
+    def __init__(self, arquivo_externo_usuarios="usuarios.json"):
+
+        """
+        Inicializa o sistema de usuários e carrega os dados do arquivo JSON
+
+        Parâmetros:
+            arquivo_externo_usuarios (str): Caminho para o arquivo JSON com os dados dos usuários
+        """
+        self.arquivo_externo_usuarios = arquivo_externo_usuarios
+        self.usuarios = []
+        self.carregarDadosUsuarios()
+
+    def menu(self):
+       
+       """
+        Exibe o menu principal com as opções disponíveis para o usuário.
+
+        Retorna:
+            str: Opção escolhida pelo usuário.
+        """
+       print("\033[34m|======================================|\033[m")
+       print("\033[34m|        >>> MENU PRINCIPAL <<<        |\033[m")
+       print("\033[34m|--------------------------------------|\033[m")
+       print("\033[34m|\033[33m  [1]\033[m \033[34m -  Cadastro de Usuário         |\033[m")
+       print("\033[34m|\033[33m  [2]\033[m \033[34m -  Ver Informações de Usuário  |\033[m")
+       print("\033[34m|\033[33m  [3]\033[m \033[34m -  Deletar Conta               |\033[m")
+       print("\033[34m|\033[33m  [4]\033[m \033[34m -  Atualizar Dados da Conta    |\033[m")
+       print("\033[34m|\033[33m  [5]\033[m \033[34m -  Login                       |\033[m")
+       print("\033[34m|\033[33m  [6]\033[m \033[34m -  Recomendações de Eventos    |\033[m")
+       print("\033[34m|======================================|\033[m ")
+       return input("\033[34mEscolha uma das opções acima:\033[m")
+       
+    
+    
+    def limparTerminal(self):
+
+        """
+        Limpa o terminal com base no sistema operacional.
+
+        Retorna:
+            int: Código de status do comando de limpeza do terminal.
+        """
+        return os.system("cls" if os.name == "nt" else "clear")
+
+    # Envio e modelagem dos dados para o arquivo externo json
+    def carregarDadosUsuarios(self):
+
+        """
+        Carrega os usuários do arquivo JSON e os armazena em uma lista.
+        """
+        if os.path.exists(self.arquivo_externo_usuarios):
+            with open(self.arquivo_externo_usuarios, "r", encoding="utf-8") as d:
+                try:
+                    conteudo = d.read().strip()
+                    if not conteudo:
+                        self.usuarios = []
+                        return
+                    dados = json.loads(conteudo)
+                    self.usuarios = []
+                    for item in dados:
+                        nome = item.get("nome")
+                        email = item.get("email")
+                        senha = item.get("senha")
+                        divisao = item.get("divisao")
+                        pontos = item.get("pontos")
+                        usuario = Usuario(
+                            nome,
+                            email,
+                            senha,
+                            divisao=divisao if divisao is not None else "Ferro",
+                            pontos=pontos if pontos is not None else 0
+                        )
+                        self.usuarios.append(usuario)
+                except json.JSONDecodeError:
+                    print("\033[31m[ERRO] Arquivo JSON inválido. Reiniciando lista de usuários...\033[m")
+                    self.usuarios = []
+        else:
+            self.usuarios = []
+
+    #Salva dados do usuário no arquivo externo json
+    def salvaradosUsuarios(self):
+
+        """
+        Salva os dados dos usuários no arquivo JSON.
+        """
+        with open(self.arquivo_externo_usuarios,"w",encoding="utf-8") as d: #Abre o arquivo json no modo de escrita
+            json.dump([item.modelarUsuario() for item in self.usuarios],d,indent=4,ensure_ascii=False)
+
+
+    def cadastrarUsuario(self):
 
         """
         Realiza o cadastro de um novo usuário.
@@ -165,13 +179,13 @@ class SistemaDeUsuarios:
         # Loop para nome
         while True:
             nome = input("Digite seu nome: ").strip().lower()
-            if validacao_de_nome(nome, self.usuarios):
+            if validacaoNome(nome, self.usuarios):
                 break
 
         # Loop para email até ser digitado um email com domínio válido
         while True:
             email = input("Digite seu email (ex: @gmail.com, @hotmail.com, @yahoo.com): ").strip()
-            if validacao_de_email(email,self.usuarios):
+            if validacaoEmail(email,self.usuarios):
                 break
 
         # Loop para senha e confirmação de senha até ambas serem validadas
@@ -187,7 +201,7 @@ class SistemaDeUsuarios:
                 print("\033[31m[ERRO], o preenchimento da senha e obrigatório\033[m")
                 continue
 
-            if not validacao_de_senha(senha):
+            if not validacaoSenha(senha):
                 print("\033[31m[ERRO] A senha deve conter:\n- No mínimo 8 caracteres\n- Uma letra maiúscula\n- Um número\n- Um caractere especial.\033[m")
                 continue
             break
@@ -195,12 +209,12 @@ class SistemaDeUsuarios:
         # Se tudo estiver certo, cria e salva o usuário
         novo_usuario = Usuario(nome, email, senha)
         self.usuarios.append(novo_usuario) # Salva o novo usuário na lista
-        self.salvar_dados_usuarios()
-        self.limpar_terminal()
+        self.salvaradosUsuarios()
+        self.limparTerminal()
         print("\033[32m Novo Usuário cadastrado com sucesso! \033[m")
 
 
-    def ver_conta(self):
+    def verContaUsuario(self):
         ''' 
         Possibilita a leitura dos dados de usuário
 
@@ -211,14 +225,14 @@ class SistemaDeUsuarios:
         senha = input("Digite sua senha:").strip()
         for usuario in self.usuarios: #Escaneia os pares chave-valor dentro da lista usuarios
             if usuario.email == email and usuario.senha == senha: #verifica se o email e a senha batem com o que está salvo no arquivo de usuarios
-                self.limpar_terminal()
+                self.limparTerminal()
                 print(f"Dados de Usuário:\033[32m\n•Nome: {usuario.nome} \n•Email:{usuario.email} \n•Senha:{usuario.senha}\033[m")
                 return  # Sai da função após encontrar o usuário
 
             # Se o laço terminar sem encontrar, mostra uma única vez:
         print(" \033[31m[ERRO] Email ou Senha Incorretos \033[m")
 
-    def deletar_conta(self):
+    def deletarUsuario(self):
         ''' 
         Deleta usuários já cadastrados
 
@@ -234,7 +248,7 @@ class SistemaDeUsuarios:
                 confirmacao = input("Tem certeza que deseja deletar sua conta? (s/n): ").strip().lower()
                 if confirmacao == "s":
                     del self.usuarios[i] #Exclui o item da lista permanentemente utilizando a func del() a partir do índice[i].
-                    self.salvar_dados_usuarios()
+                    self.salvaradosUsuarios()
                     print("\033[32mConta deletada com sucesso!\033[m")
                 else:
                     print("\033[33mOperação cancelada.\033[m")
@@ -243,7 +257,7 @@ class SistemaDeUsuarios:
         print("\033[31m[ERRO] Email ou senha incorretos.\033[m")
 
 
-    def atualizar_usuario(self):
+    def atualizarUsuario(self):
         '''
         Permite a edição dos dados de usuário
 
@@ -273,7 +287,7 @@ class SistemaDeUsuarios:
                 if opcao == "2" or opcao == "4":
                     while True:
                         novo_email = input("Novo email: ").strip()
-                        if validacao_de_email(novo_email):
+                        if validacaoEmail(novo_email):
                             usuario.email = novo_email
                             break
                         else:
@@ -286,43 +300,64 @@ class SistemaDeUsuarios:
                         if nova_senha != confirmar:
                             print("\033[31m[ERRO] As senhas não coincidem.\033[m")
                             continue
-                        if not validacao_de_senha(nova_senha):
+                        if not validacaoSenha(nova_senha):
                             print("\033[31m[ERRO] A senha deve conter:\n- No mínimo 8 caracteres\n- Uma letra maiúscula\n- Um número\n- Um caractere especial.\033[m")
                             continue
                         usuario.senha = nova_senha
                         break
-                self.limpar_terminal()
-                self.salvar_dados_usuarios()
+
+                self.limparTerminal()
+                self.salvaradosUsuarios()
                 print("\033[32mDados atualizados com sucesso!\033[m")
                 return
 
         print("\033[31m[ERRO] Email ou senha incorretos.\033[m")
 
-    def login_conta(self):
-        print("+==============+ Login +==============+")
+    def loginUsuario(self):
+        print("\033[34m +==============+ Login +==============+\033[m")
+        from games import SistemaDeJogos
+        from book_search import BuscadorLivros
+        sistema_jogos = SistemaDeJogos()
+        sistema_Buscador_Livros = BuscadorLivros()
         email = input("Email:").strip()
         senha = input("Senha:").strip()
         for usuario in self.usuarios:
             if usuario.email == email and usuario.senha == senha:
-                self.limpar_terminal()
+                self.limparTerminal()
                 print(f"Seja Bem vindo, {usuario.nome}!")
 
                 while True:
-                    print("\n--- Menu de jogos culturais ---")
-                    print("1. jogo-teste")
-                    print("2. sair do menu de jogos")
-                    print("3. Sair da conta")
+                    print("\n \033[36m+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+>>> Menu de Games <<<+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+\033[m")
+                    print("\033[33m[1]\033[m - Quiz Literário")
+                    print("\033[33m[2]\033[m - Adivinhe o livro pela Citação")
+                    print("\033[33m[3]\033[m - Adivinhe a Música pela letra")
+                    print("\033[33m[4]\033[m - Forca de conhecimentos literários")
+                    print("\033[33m[5]\033[m - Buscador de Livros(Acesso a Livros gratuitos)")
+                    print("\033[33m[6]\033[m - Retornar ao menu principal")
                     esc = input("Escolha uma opção: ")
 
                     if esc == "1":
-                        print("Jogo simulado... +10 pontos")
-                        if not hasattr(usuario, 'pontos'):
-                            usuario.pontos = 0
-                        usuario.pontos += 10
-                        self.salvar_dados_usuarios()
-                    elif(esc == "2"):
+                        sistema_jogos.quizLiterario(usuario)
+                        self.salvaradosUsuarios()
+
+                    elif esc == "2":
+                        sistema_jogos.adivinharQuotes(usuario)
+                        self.salvaradosUsuarios()
+                    
+                    elif esc == "3":
+                        sistema_jogos.adivinharMusicaLetra(usuario)
+                        self.salvaradosUsuarios()
+
+                    elif esc == "4":
+                        sistema_jogos.forcaLiteraria(usuario)
+                        self.salvaradosUsuarios()
+
+                    elif esc == "5":
+                        sistema_Buscador_Livros.executarInterfaceBuscador()
+                        
+                    elif(esc == "6"):
                         print("Saindo da conta")
                         break
                 return
                 
-            print("[ERRO]")
+        print("[ERRO]")

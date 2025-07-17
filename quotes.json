@@ -1,0 +1,132 @@
+[
+    {
+        "citacao": "O homem não é, absolutamente, um resultado firme e duradouro (este foi, apesar dos pressentimentos contrapostos dos seus sábios, o ideal da antiguidade), mas um ensaio e uma transição; não é mais do que a ponte estreita e perigosa entre a natureza e o espírito.",
+        "opcoes": [
+            "Humano, demasiado humano",
+            "O lobo da estepe",
+            "A montanha mágica",
+            "Assim falou zaratustra"
+        ],
+        "resposta": "O lobo da estepe"
+    },
+
+    {
+        "citacao": "Não tive filhos, não transmiti a nenhuma criatura o legado de nossa miséria",
+        "opcoes": [
+            "Dom casmurro",
+            "Quincas borba",
+            "A morte de Ivan ilitch",
+            "Memórias póstumas de brás cubas"
+        ],
+        "resposta": "Memórias póstumas de brás cubas"
+    },
+
+    {
+        "citacao": "O problema, quando você é o chefe, é que precisa pensar, dizer a coisa certa. Aí a ocasião chega, e você precisa tomar uma decisão. Por isso é que você tinha de pensar; porque o pensamento é uma coisa valiosa, que produz resultados…",
+        "opcoes": [
+            "O senhor das moscas",
+            "O pequeno príncipe",
+            "O mundo de sofia",
+            "As aventuras de pinóquio"
+        ],
+        "resposta": "O senhor das moscas"
+    },
+
+    {
+        "citacao":"Senhor Deus dos desgraçados! Dizei-me vós, Senhor Deus! Se é loucura... se é verdade Tanto horror perante os céus?!Ó mar, por que não apagasCo'a esponja de tuas vagasDe teu manto este borrão? Astros! noites! tempestades!Rolai das imensidades!Varrei os mares, tufão!",
+        "opcoes": [
+            "Espumas flutuantes",
+            "Os escravos",
+            "O navio negreiro",
+            "Guesa errante"
+        ],
+        "resposta": "O navio negreiro"
+    },
+
+    {
+        "citacao":  "Eu matei a mim mesmo e não a velhota! Ali, eu massacrei a mim mesmo, de uma vez só e para sempre!… A velhota, foi o diabo quem matou, e não eu…",
+        "opcoes": [
+            "Crime e castigo",
+            "Os demônios",
+            "Fausto",
+            "Elogio da loucura"
+        ],
+        "resposta": "Crime e castigo"
+    },
+
+    {
+        "citacao":  "O major está no interior da casa que serve de quartel, lendo. O seu estudo predileto é agora artilharia. Comprou compêndios; mas, como sua instrução é insuficiente, da artilharia vai à balística, da balística à mecânica, da mecânica ao cálculo e à geometria analítica; desce mais a escada; vai à trigonometria, à geometria e à álgebra e à aritmética.",
+        "opcoes": [
+            "Os sertões",
+            "Triste fim de policarpo quaresma",
+            "O tempo e o vento",
+            "O quinze"
+        ],
+        "resposta": "Triste fim de policarpo quaresma"
+    },
+
+    {
+        "citacao":  "A irmã tocou tão lindamente. Seu rosto estava inclinado para o lado e ela seguia as notas com olhos penetrantes e comoventes. Gregor avançou um pouco, mantendo os olhos baixos para que pudessem encontrar os dela. Ele era uma fera se a música podia comovê-lo tanto?",
+        "opcoes": [
+            "A metamorfose",
+            "O processo",
+            "A bela e a fera",
+            "Frankstein"
+        ],
+        "resposta": "A metamorfose"
+    },
+
+    {
+        "citacao":  "A ave sai do ovo. O ovo é o mundo. Quem quiser nascer tem que destruir um mundo. A ave voa para Deus. E o Deus se chama Abraxas.",
+        "opcoes": [
+            "Fausto",
+            "Demian",
+            "Irmãos karamazov",
+            "Confissões"
+        ],
+        "resposta": "Demian"
+    },
+
+    {
+        "citacao":  "Muitos anos depois, diante do pelotão de fuzilamento, o Coronel Aureliano Buendía haveria de recordar aquela tarde distante em que seu pai o levou para descobrir o gelo...",
+        "opcoes": [
+            "Cem anos de solidão",
+            "O triste fim de policarpo quaresma",
+            "O crime do padre amaro",
+            "Os sertões"
+        ],
+        "resposta": "Cem anos de solidão"
+    },
+
+    {
+        "citacao":  "Valha-me Nossa Senhora, Mãe de Deus de Nazaré! A vaca mansa dá leite, a braba dá quando quer. A mansa dá sossegada, a braba levanta o pé. Já fui barco, fui navio, mas hoje sou escaler. Já fui menino, fui homem, só me falta ser mulher.",
+        "opcoes": [
+            "Macunaíma",
+            "O auto da compadecida",
+            "A farsa da boa preguiça",
+            "O noviço"
+        ],
+        "resposta": "O auto da compadecida"
+    },
+
+    {
+        "citacao":  "Saber usar a maré. — Para os fins do conhecimento é preciso saber usar a corrente interna que nos leva a uma coisa, e depois aquela que, após algum tempo, nos afasta da coisa",
+        "opcoes": [
+            "Além do bem e do mal",
+            "O príncipe",
+            "Humano, demasiado humano",
+            "Sincronicidade"
+        ],
+        "resposta": "Humano, demasiado humano"
+    }
+
+]
+
+
+
+
+
+
+
+
+

@@ -134,7 +134,7 @@ class SistemaDeEventos:
         x_centro = (canvas_largura - frame_largura) // 2
         self.canvas.coords(self.canvas_window_id, x_centro, 0)
         
-    def executar_interface_de_eventos(self):
+    def executarInterfaceEventos(self):
         self.janela = tkinter.Tk()
         self.janela.title("Divulgador de Eventos Regionais")
         self.janela.geometry("850x750")

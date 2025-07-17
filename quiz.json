@@ -1,0 +1,177 @@
+[
+    {
+        "pergunta": "Qual obra de Machado de assis envolve a desconfiança de traição da amada pelo personagem principal?",
+        "opcoes": ["O alienista", "Memórias póstumas de brás cubas", "Dom casmurro", "Quincas borba"],
+        "resposta": "Dom casmurro",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "Qual obra de Ariano suassuna retrata as aventuras de João grilo e Chicó no sertão da Paraíba?",
+        "opcoes": ["O sedutor do sertão", "A farsa da boa preguiça", "A pena e a lei", "O auto da compadecida"],
+        "resposta": "O auto da compadecida",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "Qual obra de Clarice lispector tem como enredo principal uma jovem nordestina chamada Macabéa que busca melhores condições de vida no Rio de janeiro?",
+        "opcoes": ["A paixão segundo gh", "Felicidade clandestina", "A hora da estrela", "laços de família"],
+        "resposta": "A hora da estrela",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "Qual desses autores pernambucanos é um dos mais importantes nomes da sociologia brasileira?",
+        "opcoes": ["Gilberto Freyre", "Paulo Freire", "Manuel Bandeira", "Raquel de Queiroz"],
+        "resposta": "Gilberto Freyre",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "Qual autor pernambucano é conhecido pela obra 'Morte e Vida Severina'?",
+        "opcoes": ["João Cabral de Melo Neto", "Manuel Bandeira", "Gilberto Freyre", "Ariano Suassuna"],
+        "resposta": "João Cabral de Melo Neto",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "Qual obra de Dante alighieri o tornou universalmente conhecido e renomado na literatura?",
+        "opcoes": ["A divina comédia", "O príncipe", "Ensaios", "Leviatã"],
+        "resposta": "A divina comédia",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "O leviatã foi uma obra importante para a definição das funções cabíveis a um estado na sociedade, quem foi o autor da obra?",
+        "opcoes": ["Thomas mann", "Thomas hobbes", "Michel de montagne", "René descartes"],
+        "resposta": "Thomas hobbes",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "Qual obra de René descartes foi a responsável por popularizar o método científico, baseado na premissa 'Cogito, ergo sum'?",
+        "opcoes": ["O dicurso sobre o método", "Novum organum", "A lógica da pesquisa científica", "Ensaios"],
+        "resposta": "Thomas hobbes",
+        "dificuldade": "fácil"
+    },
+
+    {
+        "pergunta": "A qual movimento literário pertence Ariano Suassuna?",
+        "opcoes": ["Romantismo", "Modernismo", "Realismo", "Movimento Armorial"],
+        "resposta": "Movimento Armorial",
+        "dificuldade": "médio"
+    },
+
+    {
+        "pergunta": "Quem é o autor da célebre obra 'Triste fim de pólicarpo quaresma'?",
+        "opcoes": ["Carlos drummond de andrade", "Machado de assis", "Lima barreto", "Augusto dos anjos"],
+        "resposta": "Lima barreto",
+        "dificuldade": "médio"
+    },
+
+    {
+        "pergunta": "Qual poena que nasceu em Recife e escreveu poesias como 'Pneumotórax' e 'Pasárgada'?",
+        "opcoes": ["Manuel Bandeira", "Vinicius de Moraes", "Mário Quintana", "João Cabral de Melo Neto"],
+        "resposta": "Manuel Bandeira",
+        "dificuldade": "médio"
+    },
+
+    {
+        "pergunta": "Clarice lispector foi um expoente de qual movimento literário? ",
+        "opcoes": ["Segunda geração do modernismo", "Geração de 45", "Naturalismo", "Parnasianismo"],
+        "resposta": "Geração de 45",
+        "dificuldade": "médio"
+    },
+
+     {
+        "pergunta": "Manuel bandeira foi um dos grandes expoentes da primeira fase do modernismo, cuja característica principal foi?",
+        "opcoes": ["Academicismo", "Nacionalismo crítico", "Excesso de formalismo línguistico", "Temas universais"],
+        "resposta": "Nacionalismo crítico",
+        "dificuldade": "médio"
+    },
+
+    {
+        "pergunta": "Em qual cenário da Divina comédia Dante encontra sua amada Beatriz?",
+        "opcoes": ["Inferno", "Mundo humano", "Céu", "purgatório"],
+        "resposta": "Céu",
+        "dificuldade": "médio"
+    },
+
+    {
+        "pergunta": "Nicolau maquiavel foi importante filósofo político do século XV com uma rica obra que perdura até os dias atuais, em qual de seus livros maquiavel se utiliza da história romana desde sua fundação para discutir temas como a organização do estado e expansão territorial?",
+        "opcoes": ["o príncipe", "Discursos sobre a primeira década de tito lívio", "A peste", "A arte da guerra"],
+        "resposta": "Discursos sobre a primeira década de tito lívio",
+        "dificuldade": "médio"
+    },
+
+    {
+        "pergunta": "Qual filosófo contratualista foi o principal contribuinte para o estabelecimento da doutrina do direito divino dos reis no contexto de fundação do absolutismo monárquico?",
+        "opcoes": ["Jacques Bossuet", "Jean Jacques Rousseau", "Thomas hobbes", "Voltaire"],
+        "resposta": "Jacques Bossuet",
+        "dificuldade": "médio"
+    },
+
+    {
+        "pergunta": "Qual autor pernambucano traduziu obras de Federico García Lorca e influenciou a poesia concreta brasileira?",
+        "opcoes": ["João Cabral de Melo Neto", "Carlos Pena Filho", "Gilberto Freyre", "Manuel Bandeira"],
+        "resposta": "João Cabral de Melo Neto",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta": "Qual foi a principal inspiração para o poema 'Evocação do Recife' de Manuel Bandeira?",
+        "opcoes": ["A infância vivida em Recife", "A morte de seu pai", "O exílio em Petrópolis", "A paisagem sertaneja"],
+        "resposta": "A infância vivida em Recife",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta":"A semana da arte moderna de 22 foi evento muito importante que visou a renovação do cenário artístico-cultural brasileiro, por meio de manifestos que destacavam as ideias do movimento, qual deles destacou o uso da cultura europeia nessa renovação cultural?",
+        "opcoes": ["Manifesto da poesia pau-brasil", "Manifesto antropofágico", "Manifesto regionalista", "Manifesto verde-amarelismo"],
+        "resposta": "Manifesto antropofágico",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta":"A terceira geração do romantismo no Brasil foi profundamente marcada pelo abolicionismo e o foco no contexto social que a tornou conhecida como geração 'condoreira', tendo como principal expoente?",
+        "opcoes": ["Castro alves", "Álvares de azevedo", "Gonçalves dias", "Gonçalves de magalhães"],
+        "resposta": "Castro alves",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta":"Qual poeta brasileiro teve uma obra marcada com características que se encaixam nas 3 gerações do romantismo?",
+        "opcoes": ["Bernardo guimarães", "Castro alves", "Basílio da gama", "Gonçalves de magalhães"],
+        "resposta": "Castro alves",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta":"Qual poeta brasileiro teve uma obra marcada com características que se encaixam nas 3 gerações do romantismo?",
+        "opcoes": ["Bernardo guimarães", "Castro alves", "Basílio da gama", "Gonçalves de magalhães"],
+        "resposta": "Castro alves",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta":"Qual obra do autor alemão Hermann hesse retrata a vida de um homem que sofre uma crise de identidade ao ficar preso numa dualidade conflituosa entre o selvagem e o espiritual?",
+        "opcoes": ["O lobo da estepe", "Demian", "Narciso e goldmund", "Sidartha"],
+        "resposta": "O lobo da estepe",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta":"Na obra o Ensaio sobre a cegueira do célebre escritor José saramago, a cegueira retratada na trama possui uma cor específica para as pessoas que sofrem com a condição no contexto da história. qual é a cor que os cegos enxergam no livro?",
+        "opcoes": ["Azul", "Branca", "Preta", "Amarela"],
+        "resposta": "Branca",
+        "dificuldade": "difícil"
+    },
+
+    {
+        "pergunta":"Na famosa obra Cem anos de solidão de Gabriel garcía márquez, o vilarejo de macondo passa por vários acontecimentos relacionados com as tramas internas da família buendía, nesse sentido o que causou o fenômeno da insônia misteriosa do vilarejo?",
+        "opcoes": ["A chegada de Rebeca na família Buendía", "A saída de josé arcádio de casa", "Não houve causa correlacionável", "Os hábitos incomuns de Rebeca durante a noite"],
+        "resposta": "Não houve causa correlacionável",
+        "dificuldade": "difícil"
+    }
+
+]

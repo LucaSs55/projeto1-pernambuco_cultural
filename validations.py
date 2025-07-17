@@ -1,5 +1,5 @@
 import re
-def validacao_de_nome(nome,usuarios):
+def validacaoNome(nome,usuarios):
         '''  
         Verifica se o nome está vazio, contém caracteres especiais, ou se já está salvo em outro usuário
         
@@ -23,7 +23,7 @@ def validacao_de_nome(nome,usuarios):
             return False
         return True
     
-def validacao_de_email(email,usuarios):
+def validacaoEmail(email,usuarios):
 
         """
         Verifica se o email termina com um dos domínios válidos.
@@ -53,7 +53,7 @@ def validacao_de_email(email,usuarios):
              #Verifica se o email termina com os domínios válidos
         
 
-def validacao_de_senha(senha):
+def validacaoSenha(senha):
        
        """
         Verifica se a senha atende aos critérios de complexidade.
