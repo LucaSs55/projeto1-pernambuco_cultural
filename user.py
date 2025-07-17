@@ -90,6 +90,27 @@ class SistemaUsuarios:
         self.usuarios = []
         self.carregarDadosUsuarios()
 
+
+
+
+    def login_conta(self):
+        if self.usuario_logado:
+            print(f"\033[33m[INFO] Você já está logado como {self.usuario_logado.nome}.\033[m")
+            return
+        
+        print("+============+ LOGIN +============+")
+        email = input("Email: ").strip()
+        senha = input("Senha: ").strip()
+
+        for usuario in self.usuarios:
+            if usuario.email == email and usuario.senha == senha:
+                self.usuario_logado = usuario
+                self.limpar_terminal() 
+                print(f"\033[32m Seja bem-vindo(a), {usuario.nome}!\033[m")
+                return
+        print("\033[31m[ERRO] Email ou senha incorretos. \033[m")
+
+
     def menu(self):
        
        """
