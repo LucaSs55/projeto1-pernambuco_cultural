@@ -90,27 +90,6 @@ class SistemaUsuarios:
         self.usuarios = []
         self.carregarDadosUsuarios()
 
-
-
-
-    def login_conta(self):
-        if self.usuario_logado:
-            print(f"\033[33m[INFO] Você já está logado como {self.usuario_logado.nome}.\033[m")
-            return
-        
-        print("+============+ LOGIN +============+")
-        email = input("Email: ").strip()
-        senha = input("Senha: ").strip()
-
-        for usuario in self.usuarios:
-            if usuario.email == email and usuario.senha == senha:
-                self.usuario_logado = usuario
-                self.limpar_terminal() 
-                print(f"\033[32m Seja bem-vindo(a), {usuario.nome}!\033[m")
-                return
-        print("\033[31m[ERRO] Email ou senha incorretos. \033[m")
-
-
     def menu(self):
        
        """
@@ -131,8 +110,6 @@ class SistemaUsuarios:
        print("\033[34m|======================================|\033[m ")
        return input("\033[34mEscolha uma das opções acima:\033[m")
        
-    
-    
     def limparTerminal(self):
 
         """
@@ -196,16 +173,17 @@ class SistemaUsuarios:
         Solicita nome, email e senha, realiza validações, e armazena o novo usuário se todas
         as informações forem válidas.
         """
-        print("============> Cadastro de Usuário <============")
+        self.limparTerminal()
+        print("\033[34m============> Cadastro de Usuário <============\033[m")
         # Loop para nome
         while True:
-            nome = input("Digite seu nome: ").strip().lower()
+            nome = input("\033[33mDigite seu nome:\033[m ").strip().lower()
             if validacaoNome(nome, self.usuarios):
                 break
 
         # Loop para email até ser digitado um email com domínio válido
         while True:
-            email = input("Digite seu email (ex: @gmail.com, @hotmail.com, @yahoo.com): ").strip()
+            email = input("\033[33mDigite seu email (ex: @gmail.com, @hotmail.com, @yahoo.com):\033[m ").strip()
             if validacaoEmail(email,self.usuarios):
                 break
 
@@ -241,9 +219,10 @@ class SistemaUsuarios:
 
         Solicita Email, Senha e realiza validações se estiverem corretos imprime os dados de usuário na tela 
         '''
-        print("============> Ver Informações de Usuário <============")
-        email = input("Digite seu email:").strip()
-        senha = input("Digite sua senha:").strip()
+        self.limparTerminal()
+        print("\033[34m============> Ver Informações de Usuário <============\033[m")
+        email = input("\033[33mDigite seu email:\033[m").strip()
+        senha = input("\033[33mDigite sua senha:\033[m").strip()
         for usuario in self.usuarios: #Escaneia os pares chave-valor dentro da lista usuarios
             if usuario.email == email and usuario.senha == senha: #verifica se o email e a senha batem com o que está salvo no arquivo de usuarios
                 self.limparTerminal()
@@ -259,10 +238,11 @@ class SistemaUsuarios:
 
         Solicita Email e Senha, se ambos forem validados, então há um input de confirmação da deleção de conta por parte do usuario
         '''
-        print("============> Deletar Conta <============")
+        self.limparTerminal()
+        print("\033[34m============> Deletar Conta <============\033[m")
     
-        email = input("Digite seu email: ").strip()
-        senha = input("Digite sua senha: ").strip()
+        email = input("\033[33mDigite seu email:\033[m ").strip()
+        senha = input("\033[33mDigite sua senha:\033[m ").strip()
         #Loop com índice para passar pela lista usuarios, trazendo cada usuario e seu respectivo índice
         for i, usuario in enumerate(self.usuarios):
             if usuario.email == email and usuario.senha == senha:
@@ -277,7 +257,6 @@ class SistemaUsuarios:
 
         print("\033[31m[ERRO] Email ou senha incorretos.\033[m")
 
-
     def atualizarUsuario(self):
         '''
         Permite a edição dos dados de usuário
@@ -285,16 +264,17 @@ class SistemaUsuarios:
         Solicita Email e Senha, e se ambos forem validados, então é aberto um menu de escolha das informações a serem alteradas [1]Nome,[2]Email,[3]Senha,[4] Todos os dados
         
         '''
-        print("============> Atualizar Conta <============")
+        self.limparTerminal()
+        print("\033[34m============> Atualizar Conta <============\033[m")
 
-        email = input("Digite seu email atual: ").strip()
-        senha = input("Digite sua senha atual: ").strip()
+        email = input("\033[33mDigite seu email atual:\033[m ").strip()
+        senha = input("\033[33mDigite sua senha atual:\033[m ").strip()
 
         for usuario in self.usuarios:
             if usuario.email == email and usuario.senha == senha:
                 print("\033[32mUsuário encontrado.\033[m")
                 print("O que você deseja atualizar?")
-                print("[1] Nome\n[2] Email\n[3] Senha\n[4] Todos os dados") # Menu para exclusão de dados
+                print("\033[33m[1] Nome\n[2] Email\n[3] Senha\n[4] Todos os dados\033[m") # Menu para exclusão de dados
                 opcao = input("Escolha uma opção: ").strip()
 
                 if opcao == "1" or opcao == "4":
@@ -335,27 +315,31 @@ class SistemaUsuarios:
         print("\033[31m[ERRO] Email ou senha incorretos.\033[m")
 
     def loginUsuario(self):
+        self.limparTerminal()
         print("\033[34m +==============+ Login +==============+\033[m")
         from games import SistemaDeJogos
         from book_search import BuscadorLivros
         sistema_jogos = SistemaDeJogos()
-        sistema_Buscador_Livros = BuscadorLivros()
-        email = input("Email:").strip()
+        sistema_buscador_Livros = BuscadorLivros()
+        email = input("\033[33mEmail:").strip()
         senha = input("Senha:").strip()
         for usuario in self.usuarios:
             if usuario.email == email and usuario.senha == senha:
                 self.limparTerminal()
-                print(f"Seja Bem vindo, {usuario.nome}!")
+                print(f"\033[32mSeja Bem vindo, {usuario.nome}!\033[m")
 
                 while True:
-                    print("\n \033[36m+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+>>> Menu de Games <<<+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+\033[m")
-                    print("\033[33m[1]\033[m - Quiz Literário")
-                    print("\033[33m[2]\033[m - Adivinhe o livro pela Citação")
-                    print("\033[33m[3]\033[m - Adivinhe a Música pela letra")
-                    print("\033[33m[4]\033[m - Forca de conhecimentos literários")
-                    print("\033[33m[5]\033[m - Buscador de Livros(Acesso a Livros gratuitos)")
-                    print("\033[33m[6]\033[m - Retornar ao menu principal")
-                    esc = input("Escolha uma opção: ")
+                    print("\033[36m|=========================================|\033[m")
+                    print("\033[36m|           >>> Menu de Games <<<         |\033[m")
+                    print("\033[36m|=========================================|\033[m")
+                    print("\033[36m| \033[33m[1]\033[36m - Quiz Literário                    |\033[m")
+                    print("\033[36m| \033[33m[2]\033[36m - Adivinhe o livro pela Citação     |\033[m")
+                    print("\033[36m| \033[33m[3]\033[36m - Adivinhe a Música pela letra      |\033[m")
+                    print("\033[36m| \033[33m[4]\033[36m - Forca de conhecimentos literários |\033[m")
+                    print("\033[36m| \033[33m[5]\033[36m - Encontrar Livros                  |\033[m")
+                    print("\033[36m| \033[33m[6]\033[36m - Retornar ao menu principal        |\033[m")
+                    print("\033[36m|=========================================|\033[m")
+                    esc = input("\033[36mEscolha uma opção:\033[m")
 
                     if esc == "1":
                         sistema_jogos.quizLiterario(usuario)
@@ -374,11 +358,11 @@ class SistemaUsuarios:
                         self.salvaradosUsuarios()
 
                     elif esc == "5":
-                        sistema_Buscador_Livros.executarInterfaceBuscador()
+                        sistema_buscador_Livros.executarBuscadorLivros()
                         
                     elif(esc == "6"):
                         print("Saindo da conta")
                         break
                 return
                 
-        print("[ERRO]")
+        print("\033[31m[ERRO] usuário não encontrado\033[m")

@@ -1,171 +1,121 @@
-import tkinter 
-import tkinter.ttk
+import tkinter as tk
+from tkinter import messagebox
 import requests
-from PIL import Image, ImageTk
 import webbrowser
-import io
+from PIL import Image, ImageTk
+from io import BytesIO
 
 class BuscadorLivros:
-    def __init__(self):
-        self.links = {}
-        self.imagens = []
+    def __init__(self, api_key=None):
+        self.api_key = api_key
 
-    def executarInterfaceBuscador(self):
-        self.janela = tkinter.Tk()
-        self.janela.title("Buscador de Livros - Open Library")
-        self.janela.geometry("950x800")
-        self.janela.configure(bg="#f0f0f0")
+    def executarBuscadorLivros(self):
+        self.janela = tk.Tk()
+        self.janela.title("Buscador Google Books")
+        self.janela.geometry("900x700")
+        self.janela.configure(bg="#727070")
 
-        tituloPrincipal = tkinter.Label(self.janela, text="Buscador de Livros", 
-                                font=("Arial", 16, "bold"), bg="#f0f0f0")
-        tituloPrincipal.pack(pady=10)
+        # Campos de busca
+        frame_busca = tk.Frame(self.janela, bg="#727070")
+        frame_busca.pack(pady=10)
 
-        # Substituindo o Notebook por Frame simples
-        self.aba_busca = tkinter.Frame(self.janela, bg="#f0f0f0")
-        self.aba_busca.pack(fill="both", expand=True)
+        tk.Label(frame_busca, text="Título:", bg="#727070").grid(row=0, column=0, padx=5)
+        self.entry_titulo = tk.Entry(frame_busca, width=30); self.entry_titulo.grid(row=0, column=1)
 
-        self.criarFiltros(self.aba_busca)
-        self.criarAreaResultados(self.aba_busca)
+        tk.Label(frame_busca, text="Autor:", bg="#727070").grid(row=0, column=2, padx=5)
+        self.entry_autor = tk.Entry(frame_busca, width=30); self.entry_autor.grid(row=0, column=3)
+
+        tk.Label(frame_busca, text="Ano:", bg="#727070").grid(row=0, column=4, padx=5)
+        self.entry_ano = tk.Entry(frame_busca, width=10); self.entry_ano.grid(row=0, column=5)
+
+        tk.Button(frame_busca, text="Buscar Livros", command=self.buscadorFiltros, bg="green", fg="white")\
+            .grid(row=0, column=6, padx=10)
+
+        # Container com scroll
+        self.canvas = tk.Canvas(self.janela, bg="#727070", highlightthickness=0)
+        sb = tk.Scrollbar(self.janela, orient="vertical", command=self.canvas.yview)
+        self.canvas.configure(yscrollcommand=sb.set)
+        sb.pack(side="right", fill="y")
+        self.canvas.pack(side="left", fill="both", expand=True)
+
+        self.frame_resultado = tk.Frame(self.canvas, bg="white")
+        self.canvas.create_window((0,0), window=self.frame_resultado, anchor="nw")
+        self.frame_resultado.bind("<Configure>",
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
 
         self.janela.mainloop()
 
-    def criarFiltros(self, parent):
-        frame_filtros = tkinter.Frame(parent, bg="#f0f0f0")
-        frame_filtros.pack(pady=10)
-
-        tkinter.Label(frame_filtros, text="Título:", bg="#f0f0f0", font=("Arial", 10, "bold")).grid(row=0, column=0, padx=5)
-        self.entry_titulo = tkinter.ttk.Entry(frame_filtros, width=25)
-        self.entry_titulo.grid(row=0, column=1, padx=5)
-
-        tkinter.Label(frame_filtros, text="Autor:", bg="#f0f0f0", font=("Arial", 10, "bold")).grid(row=0, column=2, padx=5)
-        self.entry_autor = tkinter.ttk.Entry(frame_filtros, width=25)
-        self.entry_autor.grid(row=0, column=3, padx=5)
-
-        tkinter.Label(frame_filtros, text="Ano:", bg="#f0f0f0", font=("Arial", 10, "bold")).grid(row=0, column=4, padx=5)
-        self.entry_ano = tkinter.ttk.Entry(frame_filtros, width=10)
-        self.entry_ano.grid(row=0, column=5, padx=5)
-
-        tkinter.ttk.Button(frame_filtros, text="🔍 Buscar", command=self.buscar_livros).grid(row=0, column=6, padx=10)
-        tkinter.ttk.Button(frame_filtros, text="🧹 Limpar", command=self.limpar_filtros).grid(row=0, column=7)
-
-    def criarAreaResultados(self, parent):
-        self.canvas = tkinter.Canvas(parent, bg="#ffffff", width=910, height=600)
-        self.scroll_y = tkinter.Scrollbar(parent, orient="vertical", command=self.canvas.yview)
-        
-        # Frame com largura fixa
-        self.frame_resultados = tkinter.Frame(self.canvas, bg="#ffffff", width=850)
-
-        # Define o frame com largura fixa 
-        self.canvas_window_id = self.canvas.create_window((0, 0), window=self.frame_resultados, anchor="n", width=750)
-        
-        self.canvas.configure(yscrollcommand=self.scroll_y.set)
-
-        self.frame_resultados.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-        self.canvas.bind("<Configure>", lambda e: self.centralizar_resultados())
-
-        self.canvas.pack(side="left", fill="both", expand=True)
-        self.scroll_y.pack(side="right", fill="y")
-    
-    def centralizar_resultados(self):
-        canvas_largura = self.canvas.winfo_width()
-        frame_largura = 750  # largura definida acima
-        x_centro = (canvas_largura - frame_largura) // 2
-        self.canvas.coords(self.canvas_window_id, x_centro, 0)
-
-    def limpar_filtros(self):
-        self.entry_titulo.delete(0, tkinter.END)
-        self.entry_autor.delete(0, tkinter.END)
-        self.entry_ano.delete(0, tkinter.END)
-        for widget in self.frame_resultados.winfo_children():
-            widget.destroy()
-
-    def buscar_livros(self):
+    def buscadorFiltros(self):
         titulo = self.entry_titulo.get().strip()
         autor = self.entry_autor.get().strip()
         ano = self.entry_ano.get().strip()
+        query = []
 
-        for widget in self.frame_resultados.winfo_children():
-            widget.destroy()
-        self.links.clear()
-        self.imagens.clear()
-
-        if not titulo and not autor and not ano:
-            tkinter.Label(self.frame_resultados, text="⚠️ Digite pelo menos um critério de busca.", bg="#D10D0D").pack(pady=20)
+        if titulo:
+            query.append(f'intitle:{titulo}')
+        if autor:
+            query.append(f'inauthor:{autor}')
+        if not query:
+            messagebox.showwarning("Aviso", "Preencha título e/ou autor para buscadorFiltros.")
             return
 
-        query_parts = []
-        if titulo: query_parts.append(titulo)
-        if autor: query_parts.append(f"author:{autor}")
-        if ano: query_parts.append(f"year:{ano}")
-        query_parts.append("has_fulltext:true")  #Exibe apenas os livros com link para download
+        q = "+".join(query)
+        params = {"q": q, "maxResults": 20}
+        if self.api_key:
+            params["key"] = self.api_key
 
-        query = " ".join(query_parts)
-        url = "https://openlibrary.org/search.json"
-        params = {"q": query, "limit": 15}
-
+        endpoint_api = "https://www.googleapis.com/books/v1/volumes" #URL que faz a solicitação dos serviços da Api Google books
         try:
-            resposta = requests.get(url, params=params)
-            dados = resposta.json()
+            resp = requests.get(endpoint_api, params=params, timeout=5)
+            resp.raise_for_status()
+            itens = resp.json().get("items", [])
+            # Filtrar por ano se solicitado
+            if ano:
+                itens = [v for v in itens
+                         if "volumeInfo" in v and ano in v["volumeInfo"].get("publishedDate", "")]
+            self.exibirResultadosBusca(itens)
         except Exception as e:
-            tkinter.Label(self.frame_resultados, text=f"Erro: {e}", bg="#ffffff").pack()
+            messagebox.showerror("Erro", f"Falha na busca: {e}")
+
+    def exibirResultadosBusca(self, volumes):
+        for w in self.frame_resultado.winfo_children():
+            w.destroy()
+
+        if not volumes:
+            tk.Label(self.frame_resultado, text="Nenhum resultado encontrado.",
+                     bg="white", font=("Arial",12)).pack(pady=20)
             return
 
-        livros = dados.get("docs", [])
-        livros_filtrados = [livro for livro in livros if livro.get("has_fulltext") and "ia" in livro]
+        for v in volumes:
+            vi = v.get("volumeInfo", {})
+            title = vi.get("title", "Sem título")
+            authors = ", ".join(vi.get("authors", ["Autor desconhecido"]))
+            pub_date = vi.get("publishedDate", "Desconhecido")
+            image_url = vi.get("imageLinks", {}).get("thumbnail")
+            reader_link = v.get("accessInfo", {}).get("webReaderLink")
 
-        if not livros_filtrados:
-            tkinter.Label(self.frame_resultados, text="Nenhum livro com link de leitura encontrado.", bg="#ffffff").pack()
-            return
-        
+            card = tk.Frame(self.frame_resultado, bd=1, relief="solid", bg="#f0f0f0")
+            card.pack(fill="x", padx=10, pady=6)
 
-        for livro in livros_filtrados:
-            self.exibir_livro(livro)
+            # Link da imagem
+            if image_url:
+                try:
+                    data = requests.get(image_url, timeout=3).content
+                    img = Image.open(BytesIO(data)).resize((80, 120))
+                    photo = ImageTk.PhotoImage(img)
+                    lbl = tk.Label(card, image=photo, bg="#f0f0f0")
+                    lbl.image = photo
+                    lbl.pack(side="left", padx=10, pady=10)
+                except:
+                    pass
 
-    def exibir_livro(self, livro):
-        frame = tkinter.Frame(self.frame_resultados, bg="white", borderwidth=1, relief="solid", padx=10, pady=10)
-        frame.pack(pady=10)
-        
-        titulo = livro.get("title", "Título não disponível")
-        autores = ", ".join(livro.get("author_name", ["Autor desconhecido"]))
-        ano = livro.get("first_publish_year", "Data desconhecida")
-        sinopse = self.extrair_sinopse(livro)
-        ia_id = livro["ia"][0]
-        link_leitura = f"https://archive.org/details/{ia_id}"
+            info = tk.Frame(card, bg="#f0f0f0")
+            info.pack(side="left", fill="both", expand=True, padx=10, pady=10)
 
-        capa_img = None
-        if "cover_i" in livro:
-            cover_id = livro["cover_i"]
-            url_capa = f"https://covers.openlibrary.org/b/id/{cover_id}-L.jpg"
-            try:
-                img_data = requests.get(url_capa).content
-                pil_img = Image.open(io.BytesIO(img_data)).resize((100, 150))
-                capa_img = ImageTk.PhotoImage(pil_img)
-                self.imagens.append(capa_img)
-            except:
-                pass
+            tk.Label(info, text=f"Título: {title}", font=("Arial",14,"bold"), fg="blue", bg="#f0f0f0").pack(anchor="w")
+            tk.Label(info, text=f"Autor(es): {authors}", font=("Arial",12), bg="#f0f0f0").pack(anchor="w")
+            tk.Label(info, text=f"Ano: {pub_date}", font=("Arial",12), bg="#f0f0f0").pack(anchor="w")
 
-        conteudo = tkinter.Frame(frame, bg="white")
-        conteudo.pack(anchor="center", pady=5)
-    
-
-        if capa_img:
-            tkinter.Label(conteudo, image=capa_img, bg="white").pack(side="left", padx=10)
-
-        texto = f"Título: {titulo}\nAutor(es): {autores}\nAno: {ano}\n\nSinopse: {sinopse}"
-        tkinter.Label(conteudo, text=texto, justify="left", bg="white", font=("Arial", 10), wraplength=700).pack(anchor="w")
-
-        tkinter.Button(
-            conteudo, text="📖 Acessar Livro", bg="blue", fg="white",
-            command=lambda url=link_leitura: webbrowser.open(url)
-        ).pack(anchor="w", pady=5)
-
-    def extrair_sinopse(self, livro):
-        """Extrai a sinopse do campo first_sentence se existir"""
-        sinopse = livro.get("first_sentence")
-        if isinstance(sinopse, dict) and "value" in sinopse:
-            return sinopse["value"]
-        elif isinstance(sinopse, list):
-            return sinopse[0]
-        elif isinstance(sinopse, str):
-            return sinopse
-        return "Sinopse não disponível"
+            if reader_link:
+                tk.Button(info, text="Ler no Google Books", bg="#0066cc", fg="white",
+                          command=lambda u=reader_link: webbrowser.open(u)).pack(anchor="e", pady=5)
