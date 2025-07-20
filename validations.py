@@ -26,7 +26,7 @@ def validacaoNome(nome,usuarios):
 def validacaoEmail(email,usuarios):
 
         """
-        Verifica se o email termina com um dos domínios válidos.
+        Verifica se o email termina com um dos domínios válidos, ou se é um espaço vazio ou se já existe.
 
         Parâmetros:
             email (str): Email a ser validado.
@@ -59,7 +59,7 @@ def validacaoSenha(senha):
         Verifica se a senha atende aos critérios de complexidade.
 
         Parâmetros:
-            senha (str): Senha a ser validada.
+            senha (str): Senha a ser validada e que deve conter, 1 letra maiúscula, 1 caractere especial, 1 número e no mínimo 8 digitos.
 
         Retorna:
             bool: True se a senha for considerada forte, False caso contrário.

@@ -7,9 +7,20 @@ from io import BytesIO
 
 class BuscadorLivros:
     def __init__(self, api_key=None):
+        """
+        Inicializa a instância do buscador com uma chave de API do Google Books.
+
+        Parâmetros:
+        - api_key (str, opcional): Chave de API do Google Books. Se não for fornecida, 
+          as requisições serão feitas de forma anônima, com limite reduzido de requisições.
+        """
         self.api_key = api_key
 
     def executarBuscadorLivros(self):
+        """
+        Executa a interface gráfica do buscador de livros com campos de filtro 
+        por título, autor e ano, além de haver a rolagem vertical dentro da interface.
+        """
         self.janela = tk.Tk()
         self.janela.title("Buscador Google Books")
         self.janela.geometry("900x700")
@@ -46,6 +57,14 @@ class BuscadorLivros:
         self.janela.mainloop()
 
     def buscadorFiltros(self):
+        """
+        Realiza a busca de livros na API do Google Books com base nos filtros
+        preenchidos (título e/ou autor). Se o campo de ano for preenchido, 
+        aplica filtro adicional nos resultados.
+        
+        Exibe uma mensagem de erro ou alerta caso a busca falhe ou os campos 
+        obrigatórios não sejam preenchidos.
+        """
         titulo = self.entry_titulo.get().strip()
         autor = self.entry_autor.get().strip()
         ano = self.entry_ano.get().strip()
@@ -78,6 +97,15 @@ class BuscadorLivros:
             messagebox.showerror("Erro", f"Falha na busca: {e}")
 
     def exibirResultadosBusca(self, volumes):
+        """
+        Exibe os resultados da busca de livros na interface gráfica.
+
+        Parâmetros:
+        - volumes (list): Lista de dicionários retornados pela API do Google Books,
+          contendo informações dos livros como título, autor, data e imagem que são utilizados e exibidos na interface do buscador.
+        
+        Se nenhum resultado for encontrado, exibe uma saída informativa.
+        """
         for w in self.frame_resultado.winfo_children():
             w.destroy()
 

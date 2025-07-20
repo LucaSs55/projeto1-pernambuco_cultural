@@ -12,6 +12,8 @@ class Usuario:
             nome (str): Nome do usuário
             email (str): Email do usuário
             senha (str): Senha do usuário
+            divisão(str): Divisão do usuário que é inicializada como ferro
+            pontos(int): Número de pontos do usuário que é inicializado com valor 0
         """
         self.nome = nome
         self.email = email
@@ -21,10 +23,11 @@ class Usuario:
 
     def modelarUsuario(self):
         """
-        Converte o objeto Usuario em um dicionário
+        Modela o objeto Usuario em um dicionário
 
         Retorna:
-            dict: Dicionário com os dados do usuário
+            dicionário: Dicionário com os dados do usuário
+            chaves: nome, email, senha, divisão, pontos
         """
         return {
             "nome": self.nome,
@@ -36,10 +39,10 @@ class Usuario:
 
     def __str__(self):
         """
-        Representação em string do usuário.
+        Representação em string do objeto usuário.
 
         Retorna:
-            str: Nome e email do usuário formatados.
+            str: Nome, Email , Divisão e Pontos do usuário formatados.
         """
 
 
@@ -116,7 +119,7 @@ class SistemaUsuarios:
         Limpa o terminal com base no sistema operacional.
 
         Retorna:
-            int: Código de status do comando de limpeza do terminal.
+            nt: Código de status do comando de limpeza do terminal.
         """
         return os.system("cls" if os.name == "nt" else "clear")
 
@@ -159,7 +162,7 @@ class SistemaUsuarios:
     def salvaradosUsuarios(self):
 
         """
-        Salva os dados dos usuários no arquivo JSON.
+        Salva os dados dos usuários no arquivo usuarios.json.
         """
         with open(self.arquivo_externo_usuarios,"w",encoding="utf-8") as d: #Abre o arquivo json no modo de escrita
             json.dump([item.modelarUsuario() for item in self.usuarios],d,indent=4,ensure_ascii=False)
@@ -170,7 +173,7 @@ class SistemaUsuarios:
         """
         Realiza o cadastro de um novo usuário.
 
-        Solicita nome, email e senha, realiza validações, e armazena o novo usuário se todas
+        Solicita nome, email e senha; realiza validações; armazena o novo usuário se todas
         as informações forem válidas.
         """
         self.limparTerminal()
@@ -215,7 +218,7 @@ class SistemaUsuarios:
 
     def verContaUsuario(self):
         ''' 
-        Possibilita a leitura dos dados de usuário
+        Possibilita a leitura dos dados de usuário, após a validação com dos dados com base no que já foi previamente cadastrado
 
         Solicita Email, Senha e realiza validações se estiverem corretos imprime os dados de usuário na tela 
         '''
@@ -259,7 +262,7 @@ class SistemaUsuarios:
 
     def atualizarUsuario(self):
         '''
-        Permite a edição dos dados de usuário
+        Permite a edição dos dados de usuário depois da validação do email e da senha, com base nos dados previamente cadastrados
 
         Solicita Email e Senha, e se ambos forem validados, então é aberto um menu de escolha das informações a serem alteradas [1]Nome,[2]Email,[3]Senha,[4] Todos os dados
         
@@ -315,6 +318,23 @@ class SistemaUsuarios:
         print("\033[31m[ERRO] Email ou senha incorretos.\033[m")
 
     def loginUsuario(self):
+        '''
+        Esta função solicita o email e a senha do usuário, verifica as credenciais
+        em uma lista de usuários previamente cadastrados e, se válidas, exibe um menu 
+        interativo com diversas opções de jogos literários e uma ferramenta de busca de livros.
+
+        Após a validação de login e senha o usuário pode selecionar as opções do menu de:
+        - Jogar um quiz literário
+        - Adivinhar o livro com base em uma citação
+        - Complete a letra da música
+        - Jogar um jogo da forca com temas literários
+        - Pesquisar livros usando a API de busca
+        - Retornar ao menu principal (encerrar sessão)
+
+        Imports:
+        - `SistemaDeJogos` (módulo: games): classe responsável pelos jogos disponíveis.
+        - `BuscadorLivros` (módulo: book_search): classe responsável pela busca de livros via API.
+        '''
         self.limparTerminal()
         print("\033[34m +==============+ Login +==============+\033[m")
         from games import SistemaDeJogos
@@ -350,7 +370,7 @@ class SistemaUsuarios:
                         self.salvaradosUsuarios()
                     
                     elif esc == "3":
-                        sistema_jogos.adivinharMusicaLetra(usuario)
+                        sistema_jogos.completeLetraMusica(usuario)
                         self.salvaradosUsuarios()
 
                     elif esc == "4":
@@ -361,7 +381,7 @@ class SistemaUsuarios:
                         sistema_buscador_Livros.executarBuscadorLivros()
                         
                     elif(esc == "6"):
-                        print("Saindo da conta")
+                        print("Retornando ao menu principal")
                         break
                 return
                 

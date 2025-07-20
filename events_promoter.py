@@ -18,10 +18,13 @@ class SistemaDeEventos:
         
     def carregar_eventos(self,caminho):
         """
-        Carrega os eventoquivo JSON
+        Carrega os eventos de um arquivo JSON.
+
+        Parâmetros:
+        - caminho (str): Caminho para o arquivo JSON de eventos.
 
         Retorna:
-            list: Lista de eventos
+        - list: Lista de eventos carregados ou uma lista vazia em caso de erro.
         """
         try:
             with open(caminho,"r",encoding= "utf-8") as f: #Abre o arquivo de eventos no modo de leitura para trazer as strings salvas dentro do arquivo
@@ -36,6 +39,10 @@ class SistemaDeEventos:
             return []
     #Cria os filtros por data,cidade e palavra chave para buscar eventos regionais específicos
     def criar_filtros(self):
+        """
+        Aplica os filtros preenchidos pelo usuário nos eventos carregados
+        e atualiza a interface com os resultados filtrados.
+        """
         tkinter.Label(self.frame_filtros, text="Data:", bg="#003366",fg="white", font=("Helvetica", 10, "bold")).grid(row=0, column=0, padx=5)
         self.entry_data = tkinter.Entry(self.frame_filtros)
         self.entry_data.grid(row=0, column=1, padx=5)
@@ -52,12 +59,19 @@ class SistemaDeEventos:
         tkinter.Button(self.frame_filtros, text="Limpar", command=self.limpar_filtros_busca, bg="gray", fg="white").grid(row=0, column=7, padx=5)
     #Traz o determinado evento a partir do que é digitado no input de filtro e previne possíveis erros de usuário
     def aplicar_filtros(self):
+        """
+        Aplica os filtros preenchidos pelo usuário nos eventos carregados
+        e traz os resultados filtrados através de um frame de resultados que é exibido na tela.
+        """
         self.filtros["data"] = self.entry_data.get().strip().lower()
         self.filtros["cidade"] = self.entry_cidade.get().strip().lower()
         self.filtros["busca"] = self.entry_busca.get().strip().lower()
         self.criar_interface()
     #Faz a limpeza depois que algo é digitado no filtro
     def limpar_filtros_busca(self):
+        """
+        Limpa os campos de filtro e restaura a interface para exibir todos os eventos.
+        """
         self.entry_data.delete(0, tkinter.END)
         self.entry_cidade.delete(0, tkinter.END)
         self.entry_busca.delete(0, tkinter.END)
@@ -65,6 +79,10 @@ class SistemaDeEventos:
         self.criar_interface()
 
     def criar_interface(self):
+        """
+        Atualiza a área de resultados da interface, removendo os eventos anteriores e
+        exibindo os eventos que correspondem aos filtros aplicados.
+        """
         for widget in self.frame_resultado.winfo_children():
             widget.destroy()
 
@@ -78,6 +96,12 @@ class SistemaDeEventos:
             self.adicionar_evento(evento)
     
     def filtrar_eventos(self):
+        """
+        Filtra os eventos com base nos critérios definidos (data, cidade e palavra-chave).
+
+        Retorna:
+        - list: Lista de eventos que atendem aos critérios dos filtros.
+        """
         resultado = []
         for evento in self.eventos:
             data_ok = self.filtros["data"] in evento["data"].lower()
@@ -93,6 +117,12 @@ class SistemaDeEventos:
         return resultado
     
     def adicionar_evento(self, evento):
+        """
+        Adiciona visualmente um evento filtrado na interface gráfica.
+
+        Parâmetros:
+        - evento (dict): Dicionário contendo dados do evento como título, data, cidade, imagem, link etc.
+        """
         frame = tkinter.Frame(self.frame_resultado, bd=2, relief="ridge", bg="#f4f4f4", width=750, height=200)
         frame.pack_propagate(False)
         frame.pack(pady=10)
@@ -129,12 +159,19 @@ class SistemaDeEventos:
         
     #Centraliza horizontalmente os cards
     def centralizar_eventos(self):
+        """
+        Centraliza horizontalmente os cards de eventos na interface, dentro do canvas.
+        """
         frame_largura = 750
         canvas_largura = self.canvas.winfo_width()
         x_centro = (canvas_largura - frame_largura) // 2
         self.canvas.coords(self.canvas_window_id, x_centro, 0)
         
     def executarInterfaceEventos(self):
+        """
+        Inicia e exibe a interface gráfica principal do sistema de eventos regionais,
+        com animação de abertura, filtros e suporte a rolagem vertical.
+        """
         self.janela = tkinter.Tk()
         self.janela.title("Divulgador de Eventos Regionais")
         self.janela.geometry("850x750")
@@ -180,26 +217,55 @@ class SistemaDeEventos:
         self.canvas.bind("<Enter>", lambda e: self.canvas.focus_set())
                 # Suporte à rolagem com o mouse em toda a interface
         def on_mousewheel(self, event):
+            """
+            Manipula o evento de rolagem do mouse para sistemas Windows e macOS.
+
+            Parâmetros:
+                event (tkinter.Event): Objeto de evento que contém informações sobre o scroll do mouse.
+
+            Ação:
+                Move o conteúdo do canvas verticalmente com base no movimento da roda do mouse.
+                A sensibilidade é ajustada de acordo com o sistema operacional.
+            """
             if os.name == 'nt':
                 self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
             else:
                 self.canvas.yview_scroll(int(-1 * event.delta), "units")
 
         def on_scroll_linux_up(self, event):
+            """
+            Manipula o evento de rolagem para cima no mouse em sistemas Linux.
+
+            Parâmetros:
+                event (tkinter.Event): Evento de botão do mouse (geralmente <Button-4> em Linux).
+
+            Ação:
+                Move o conteúdo do canvas uma unidade para cima.
+            """
             self.canvas.yview_scroll(-1, "units")
 
         def on_scroll_linux_down(self, event):
+            """
+            Manipula o evento de rolagem para baixo no mouse em sistemas Linux.
+
+            Parâmetros:
+                event (tkinter.Event): Evento de botão do mouse (geralmente <Button-5> em Linux).
+
+            Ação:
+                Move o conteúdo do canvas uma unidade para baixo.
+                Também garante que o canvas receba foco quando o mouse entra nele.
+            """
             self.canvas.yview_scroll(1, "units")
             
             # Faz o canvas capturar foco ao entrar com o mouse
             self.canvas.bind("<Enter>", lambda e: self.canvas.focus_set())
 
-            
-            self.janela.bind_all("<MouseWheel>", on_mousewheel)  # Windows/macOS
-            self.janela.bind_all("<Button-4>", on_scroll_linux_up)   # Linux scroll up
-            self.janela.bind_all("<Button-5>", on_scroll_linux_down) # Linux scroll down
-            
-            
-            self.criar_filtros()
-            self.criar_interface()
-            self.janela.mainloop()
+        
+        self.janela.bind_all("<MouseWheel>", on_mousewheel)  # Windows/macOS
+        self.janela.bind_all("<Button-4>", on_scroll_linux_up)   # Linux scroll up
+        self.janela.bind_all("<Button-5>", on_scroll_linux_down) # Linux scroll down
+        
+        
+        self.criar_filtros()
+        self.criar_interface()
+        self.janela.mainloop()
