@@ -13,10 +13,10 @@ class SistemaDeEventos:
         """
         base_path = os.path.dirname(os.path.abspath(__file__))
         self.arquivo = os.path.join(base_path,arquivo_externo_eventos)
-        self.eventos = self.carregar_eventos(self.arquivo)
+        self.eventos = self.carregarEventos(self.arquivo)
         self.filtros = {"data":"","cidade":"","busca":""}
         
-    def carregar_eventos(self,caminho):
+    def carregarEventos(self,caminho):
         """
         Carrega os eventos de um arquivo JSON.
 
@@ -38,7 +38,7 @@ class SistemaDeEventos:
             tkinter.messagebox.showerror("[Erro] arquivo JSON inválido ou não encontrado.")
             return []
     #Cria os filtros por data,cidade e palavra chave para buscar eventos regionais específicos
-    def criar_filtros(self):
+    def criarFiltros(self):
         """
         Aplica os filtros preenchidos pelo usuário nos eventos carregados
         e atualiza a interface com os resultados filtrados.
@@ -55,10 +55,10 @@ class SistemaDeEventos:
         self.entry_busca = tkinter.Entry(self.frame_filtros, width=25)
         self.entry_busca.grid(row=0, column=5, padx=5)
 
-        tkinter.Button(self.frame_filtros, text="Filtrar", command=self.aplicar_filtros, bg="green", fg="white").grid(row=0, column=6, padx=10)
-        tkinter.Button(self.frame_filtros, text="Limpar", command=self.limpar_filtros_busca, bg="gray", fg="white").grid(row=0, column=7, padx=5)
+        tkinter.Button(self.frame_filtros, text="Filtrar", command=self.aplicarFiltros, bg="green", fg="white").grid(row=0, column=6, padx=10)
+        tkinter.Button(self.frame_filtros, text="Limpar", command=self.limparFiltrosBusca, bg="gray", fg="white").grid(row=0, column=7, padx=5)
     #Traz o determinado evento a partir do que é digitado no input de filtro e previne possíveis erros de usuário
-    def aplicar_filtros(self):
+    def aplicarFiltros(self):
         """
         Aplica os filtros preenchidos pelo usuário nos eventos carregados
         e traz os resultados filtrados através de um frame de resultados que é exibido na tela.
@@ -66,9 +66,9 @@ class SistemaDeEventos:
         self.filtros["data"] = self.entry_data.get().strip().lower()
         self.filtros["cidade"] = self.entry_cidade.get().strip().lower()
         self.filtros["busca"] = self.entry_busca.get().strip().lower()
-        self.criar_interface()
+        self.criarInterface()
     #Faz a limpeza depois que algo é digitado no filtro
-    def limpar_filtros_busca(self):
+    def limparFiltrosBusca(self):
         """
         Limpa os campos de filtro e restaura a interface para exibir todos os eventos.
         """
@@ -76,9 +76,9 @@ class SistemaDeEventos:
         self.entry_cidade.delete(0, tkinter.END)
         self.entry_busca.delete(0, tkinter.END)
         self.filtros = {"data": "", "cidade": "", "busca": ""}
-        self.criar_interface()
+        self.criarInterface()
 
-    def criar_interface(self):
+    def criarInterface(self):
         """
         Atualiza a área de resultados da interface, removendo os eventos anteriores e
         exibindo os eventos que correspondem aos filtros aplicados.
@@ -86,16 +86,16 @@ class SistemaDeEventos:
         for widget in self.frame_resultado.winfo_children():
             widget.destroy()
 
-        eventos_filtrados = self.filtrar_eventos()
+        eventos_filtrados = self.filtrarEventos()
 
         if not eventos_filtrados:
             tkinter.Label(self.frame_resultado, text="Nenhum evento encontrado.", bg="white", font=("Helvetica", 14)).pack(pady=20)
             return
 
         for evento in eventos_filtrados:
-            self.adicionar_evento(evento)
+            self.adicionarEvento(evento)
     
-    def filtrar_eventos(self):
+    def filtrarEventos(self):
         """
         Filtra os eventos com base nos critérios definidos (data, cidade e palavra-chave).
 
@@ -116,7 +116,7 @@ class SistemaDeEventos:
                 resultado.append(evento)
         return resultado
     
-    def adicionar_evento(self, evento):
+    def adicionarEvento(self, evento):
         """
         Adiciona visualmente um evento filtrado na interface gráfica.
 
@@ -158,7 +158,7 @@ class SistemaDeEventos:
                        command=lambda url=evento["link"]: webbrowser.open(url)).pack(anchor="w", pady=5)
         
     #Centraliza horizontalmente os cards
-    def centralizar_eventos(self):
+    def centralizarEventos(self):
         """
         Centraliza horizontalmente os cards de eventos na interface, dentro do canvas.
         """
@@ -212,7 +212,7 @@ class SistemaDeEventos:
         self.canvas_window_id = self.canvas.create_window((0, 0), window=self.frame_resultado, anchor="n")
 
         self.frame_resultado.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
-        self.canvas.bind("<Configure>", lambda e: self.centralizar_eventos())
+        self.canvas.bind("<Configure>", lambda e: self.centralizarEventos())
                 # Garante que o canvas capture o scroll mesmo fora da barra
         self.canvas.bind("<Enter>", lambda e: self.canvas.focus_set())
                 # Suporte à rolagem com o mouse em toda a interface
@@ -266,6 +266,6 @@ class SistemaDeEventos:
         self.janela.bind_all("<Button-5>", on_scroll_linux_down) # Linux scroll down
         
         
-        self.criar_filtros()
-        self.criar_interface()
+        self.criarFiltros()
+        self.criarInterface()
         self.janela.mainloop()
